@@ -1,21 +1,15 @@
-% Chapter Template
+\chapter{Representación de ambiente de ejecución}
 
-\chapter{Representación de ambiente de ejecución} % Main chapter title
-%\section{Reproducibility in scientific workflows using Docker Containers} \label{s4}
+En este trabajo, se argumenta que las descripciones de los ambientes computacionales es necesaria para la reproducción  del experimento. Además, la información debe ser la suficiente para comparar y detectar las diferencias entre el ambiente original y el reproducido.
 
-%In this paper, we argue that the description of computational environments is necessary for the reproduction of the experiment. Furthermore, the information must be enough to compare and detect differences between the original and the reproduced environments.
-
-En este trabajo, nosotros argumentamos que las descripciones de los ambientes computacionales es necesaria para la reproducción  del experimento. Además, la información debe ser la suficiente para comparar y detectar las diferencias entre el ambiente original y el reproducido.
-
-Dada que las imágenes Docker son ambientes aislados y independientes, los componentes de software dentro del container están relacionado al experimento y no existen componentes relacionados a otros experimentos.
-Por esta razón, nosotros aseguramos que las anotaciones no presentarán ruido de otras herramientas o dependencias asociadas.
-Para realizar una anotación automática de los paquetes instalados, nosotros proponemos, e implementamos un sistema de anotación.
-El sistema requiere el nombre de una imagen existente en un repositorio de DockerHub y opcionalmente los datos del repositorio Git que almacena el archivo Dockerfile. 
+Dado que las imágenes Docker son ambientes aislados y independientes, los componentes de software dentro del contenedor si están relacionado al experimento y no existen componentes relacionados a otros experimentos.
+Por esta razón, se asegura que las anotaciones no presentarán ruido de otras herramientas o dependencias asociadas.
+Para realizar una anotación automática de los paquetes instalados, se propone e implementa un sistema de anotación automático. El sistema requiere el nombre de una imagen existente en un repositorio de DockerHub y opcionalmente los datos del repositorio Git que almacena el archivo Dockerfile. 
 
 Los pasos asociados del sistema anotación:
 
 \begin{enumerate}
-	\item Consultar a repositorio los metadatos de la imagen. Anotar los metadatos utilizando la ontología propuesta.
+	\item Consultar a repositorio de imágenes Docker público o privado los metadatos de la imagen. Anotar los metadatos utilizando la ontología propuesta.
 	\item Descargar cada una de las capas asociadas a la imagen Docker.
 	\item Sistema anotador consulta a Clair, Clair monta cada una de capas de la imagen, detecta los componentes de software instalados utilizando el sistema de paquete.
 	\item Obtener la información de Clair, anotar los datos obtenidos por Clair según la ontología.
@@ -25,27 +19,25 @@ Los pasos asociados del sistema anotación:
 %----------------------------------
 % 4.1 Semantic models
 %----------------------------------
-\section{Semantic models}\label{s4.1}
+\section{Modelos semánticos}\label{s4.1}
      
-En \cite{santana2017reproducibility}, los autores proponen \emph{The Workflow Infrastructure Conservation Using Semantics ontology (WICUS)}. WICUS es ontología OWL2 (Web Ontology Language) que implementa la conceptualización de los principales dominios de la infraestructura computacional. Estas son: Hardware, Software, Workflow y recursos de computo
-     
+En \cite{santana2017reproducibility}, los autores proponen \emph{The Workflow Infrastructure Conservation Using Semantics ontology (WICUS)}. WICUS es ontología OWL2 (Web Ontology Language) que implementa la conceptualización de los principales dominios de la infraestructura computacional. Estos son: Hardware, Software, Workflow y recursos de computo
 Los autores definen que los workflows científicos requieren un conjunto de componentes de software, y los investigadores deben conocer cómo desplegar estos componentes para lograr ambiente equivalente.
-Por lo tanto, nosotros utilizamos algunos clases y relaciones desde la ontología WICUS:
+Considerando que la ontología está relacionada con nuestro trabajo, se utiliza algunas clases y relaciones desde la ontología WICUS:
 
 \begin{description}
-	\item [DeploymentPlan:]  Un plan de despliegue está compuesto de todos los pasos  	El plan de despliegue permite entender al investigador cuáles fueron los pasos requeridos para construir el ambiente computacional.
+	\item [DeploymentPlan:]  Un plan de despliegue está compuesto de todos los pasos. Y el plan de despliegue permite entender al investigador cuáles fueron los pasos requeridos para construir el ambiente computacional.
 	\item [DeploymentStep:] Cada paso de despliegue es representado por una línea de comando que realiza la instalación, descarga o configuración del ambiente. La información se obtiene desde el archivo DockerFile
 	\item [SoftwareComponent:] Es un componente de software instalado sin una versión específica. 
 \end{description} 
 
-
-Definimos \verb|SoftwarePackage| como una subclase de \verb|SoftwareComponent| para definir los componentes instalados por el gestor de paquetes del sistema operativo
+Se define el recurso \verb|dockerpedia:SoftwarePackage| como una subclase de \verb|wicus:SoftwareComponent| para definir los componentes instalados por el gestor de paquetes del sistema operativo u otro.
 Cada \verb|wicus:SoftwareComponent| tiene una relación \verb|dockerpedia:hasVersion| o \verb|dockerpedia:isVersionOf| que muestra la versión del software instalado.
-El recurso \verb|dockerpedia:PackageVersion| puede estar afectado por vulnerabilidades representadas por el recurso \verb|dockerpedia:SoftwareVulnerability| y versiones que reparan la vulnerabilidad \verb|dockerPedia:SecurityRevision|.
+El recurso \verb|dockerpedia:PackageVersion| puede estar afectado por vulnerabilidades representadas por el recurso \verb|dockerpedia:SoftwareVulnerability|. Y las versiones que reparan la vulnerabilidad se encuentran representadas por \verb|dockerPedia:SecurityRevision|.
 Una imagen Docker se representa por \verb|dockerpedia:SoftwareImage| y sus capas por el recurso \verb|dockerpedia:ImageLayer|. Los paquetes instalados en la imagen están relacionado por \verb|vocab:ContainsSoftware| con su imagen.
-Finalmente, el sistema operativo es representado por recurso \verb|dockerpedia:OperatingSystem| y cada imagen y capa de la imagen están asociados al recurso.
+Finalmente, el sistema operativo es representado por recurso \verb|dockerpedia:OperatingSystem| y cada imagen y capa de la imagen está asociado al recurso.
 
-Una versión completa se encuentra disponible en nuestros repositorios \footnote{\url{https://github.com/dockerpedia/ontology/}} y la versión resumida está representada en la figura ~\ref{fig:ontology}. 
+Una versión completa de la ontología se encuentra disponible en nuestros repositorios \footnote{\url{https://github.com/dockerpedia/ontology/}} y la versión resumida está representada en la figura ~\ref{fig:ontology}. 
 
 \begin{figure}
   \caption{Docker ontology.}
@@ -54,15 +46,17 @@ Una versión completa se encuentra disponible en nuestros repositorios \footnote
     \label{fig:ontology}
 \end{figure}
 
-
-
 %----------------------
 % 4.2 Annotator
 %-----------------------
-\section{Annotator}\label{s4.2}
+\section{Anotador}\label{s4.2}
 
-%url de repositorio github y ubicación del Dockerfile
-El servicio de anotación utiliza una interfaz REST para recibir la imagen Docker del experimento científico con la información del experimento. El sistema anotación realiza dos tipos de anotaciones: Componentes de software y pasos de construcción 
+El servicio de anotación propuesto cuenta con una interfaz REST para recibir el nombre y la versión de la imagen Docker relacionada con el experimento científico. 
+Para almacenar y interactuar con los datos el sistema de anotación utiliza a Apache Jena. Apache Jena es un framework Java gratuito y de código abierto para la construcción de aplicaciones de Web Semántica y Datos Enlazados. El sistema anotador construye los triples relacionado con el experimento, imagen, capas, componentes de software y vulnerabilidades y se envían usando con la API de Apache Jena que serializa los triples utilizando formatos populares como RDF/XML o Turtle.
+Esta decisión permite realizar cambios a otra herramienta en caso que Apache Jena no cumpla con los requerimientos de escalabilidad.
+
+El sistema anotación realiza dos tipos de anotaciones: Componentes de software y pasos de construcción.
+
 
 %--------------------------------------------
 % 4.2.1 Building steps annotations
@@ -71,8 +65,8 @@ El servicio de anotación utiliza una interfaz REST para recibir la imagen Docke
 
 Anotamos el plan de despliegue (Deployment Plan) usando dos métodos. El primero método obtiene los pasos desde el archivo Dockerfile entregado por el usuario, esto permite obtener los pasos y la ubicación de archivo en el repositorio. 
 Usando este método se asegura la reconstrucción del ambiente debido a que cualquier archivo necesario por Dockerfile se encuentra en el repositorio Git.
-Sin embargo, un usuario puede construir una imagen sin compartir el archivo Dockerfile. ~\cite{}. reporta que el 30\% de las imágenes Docker en DockerHub enlanza su archivo Dockerfile. 
-Por lo tanto, nosotros extraemos la información utilizando el manifesto de la imagen Docker. Según \footnote{\url{https://docs.docker.com/registry/spec/manifest-v2-2/}}, el manifiesto de la imagen provee la configuración y el conjunto de las capas de la imagen
+Sin embargo, un usuario puede construir una imagen sin compartir el archivo Dockerfile. En ~\cite{DBLP:conf/semweb/OsorioAV18a} se reporta que el 30\% de las imágenes Docker en DockerHub enlanza su archivo Dockerfile. 
+Por lo tanto, sino existe información del Dockerfile el sistema anotación utiliza el manifesto de la imagen Docker. Según \footnote{\url{https://docs.docker.com/registry/spec/manifest-v2-2/}} para conocer los pasos, el manifiesto de la imagen provee la configuración y el conjunto de las capas de la imagen
 
 Algunos atributos importantes son:
 
@@ -96,11 +90,6 @@ Algunos atributos importantes son:
 	\end{description}
 \end{description}
 
-Apache Jena es utilizado para almacenar y interactuar con los datos. Apache es un framework Java gratuito y de código abierto para la construcción de aplicaciones de Web Semántica y Datos Enlazados. 
-El sistema anotador construye los triples relacionado con el experimento, imagen, capas, componentes de software y vulnerabilidades y se envían usando con la API de Apache Jena que serializa los triples utilizando formatos populares como RDF/XML o Turtle.
-Esta decisión permite realiza cambios a otra herramienta en caso que Apache Jena no cumpla con los requerimientos de escalabilidad.
-
-
 
 
 %--------------------------------------------
@@ -108,8 +97,7 @@ Esta decisión permite realiza cambios a otra herramienta en caso que Apache Jen
 %---------------------------------------------
 \subsection{Anotaciones de componentes de software}\label{s4.2.2}
 
-
-Para lograr la anotación de los componentes de software se utiliza gestores de paquetes del sistema, un gestor de paquete es una colección de herramientas de software que automatizan la instalación, actualización, configuración y eliminación de componentes de software. 
+Para lograr la anotación de los componentes de software se utiliza los gestores de paquetes del sistema, un gestor de paquete es una colección de herramientas de software que automatizan la instalación, actualización, configuración y eliminación de componentes de software. 
 Los gestores que paquetes se clasifican en dos tipos: gestor de paquetes del tipo sistema y general:
 
 \begin{description}
@@ -117,8 +105,10 @@ Los gestores que paquetes se clasifican en dos tipos: gestor de paquetes del tip
 	\item [Gestor de paquetes generales:] son aquellos externos que normalmente son utilizados para instalar un componentes de software de tercero ó un lenguaje especifico (e.g., pip, conda, npm). Conda es un sistema paquete frecuentemente utilizado por investigadores al estar relacionado con Jupyter Notebook.
 \end{description}
 
-
-\subsection{Desafios}\label{s4.2.2}
+%--------------------------------------------
+% 4.2.2 Desafíos del sistema de anotación
+%---------------------------------------------
+\subsection{Desafíos del sistema de anotación}\label{s4.2.3}
 
 La descripción de los componentes de software es fundamental para realizar cuantificar la similitud entre dos o más ambientes computacionales.
 Un enfoque común para detectar los componentes de software guardar o detectar los comandos que realizan la instalación de software. Por ejemplo, la figura \ref{lst:tensorflow} muestra los comandos para instalar los componentes de la imagen TensorFlow. 
@@ -139,19 +129,9 @@ apt-get install -y --no-install-recommends \
         unzip	
 \end{lstlisting}
 
+El enfoque detectaría los componentes: build-essential, curl, libfreetype6-dev, libhdf5-serial-dev, libpng12-dev, libzmq3-dev, pkg-config, python, python-dev, rsync, software-properties-common y unzip. Sin embargo, este enfoque no obtiene información sobre las versiones o las dependencias del software. Utilizando el  enfoque propuesto, se puede terminar que el línea anterior instala 184 paquetes.
 
-El enfoque detectaría los componentes: build-essential, curl, libfreetype6-dev, libhdf5-serial-dev, libpng12-dev, libzmq3-dev, pkg-config, python, python-dev, rsync, software-properties-common y unzip. Sin embargo, el enfoque no obtiene información sobre las versiones o las dependencias del software. Utilizando el  enfoque propuesto, se puede terminar que el línea anterior instala 184 paquetes.
-
-
-Considerando la popularidad de Jupyter Notebook y conda en la comunidad científica, nosotros extendemos Clair para detectar los paquetes instalados por Conda en la imagen. Nuestra propuesta incluye la extensión de Clair para detectar los componentes de software instalados por Conda
-
-
-%Para realizar esta tarea, nosotros utilizamos y extendemos Clair. Clair es una herramienta open-source diseñada para identificar vulnerabilidades en imágenes Docker. Clair ha sido utilizada principalmente para analizar imágenes en los repositorios privados de CoreOS, pero puede ser utilizados para analizar distintos repositorios.
-
-%Clair descarga todas las capas de una imagen como un sistema de archivo \textit{file system}, analiza los componentes de software instalados en cada capa. 
-%Finalmente, el resultado del análisis es una lista de los paquetes instalados en la imagen, las capas asociadas con la imagen y sus relaciones.
-%Clair es compatible con los sistemas de paquetes de las siguientes distribuciones de Linux: Ubuntu, Debian, Alpine, Redhat, CentOS y Oracle. Sin embargo, Clair no es compatible con sistemas de paquetes generales.
-%Considerando la popularidad de Jupyter Notebook y conda en la comunidad científica, nosotros extendemos Clair para detectar los paquetes instalados por Conda en la imagen.
+Como prueba de generación y considerando la popularidad de Jupyter Notebook y conda en la comunidad científica, se extiende Clair para detectar los paquetes instalados por Conda en la imagen. La propuesta incluye e implementa la extensión de Clair para detectar los componentes de software instalados por Conda
 
 En la figura se muestra algunos de los paquetes instalado en la imagen de un workflow construido con Pegasus \ref{lst:packages-pegasus}, en la figura \ref{lst:vulnerability} se muestra una vulnerabilidad de paquete glibc instalado en la imagen Pegasus.
 \begin{lstlisting}[caption={Ejemplo de triples que muestran los componentes de software de la imagen Pegasus},label={lst:packages-pegasus},language=bash]
@@ -167,22 +147,3 @@ vocab:description  "An integer overflow in the implementation of the posix_memal
 vocab:link         "https://security-tracker.debian.org/tracker/CVE-2018-6485" , "http://people.ubuntu.com/~ubuntu-security/cve/CVE-2018-6485" ;
 vocab:severity     "High" .
 \end{lstlisting}
-
-
-
-
-%-----------------------------------------------
-% 4.3 Reproduce and compare the new environment
-%-----------------------------------------------
-%\section{Reproduce and compare the new environment}\label{s4.3}
-%\todo[inline]{P4.5.1 ¿De que sirve todo esta conservación lógica y porque RDF o SPARQL?}
-
-
-%\todo[inline]{P4.5.2 Ejemplo de como crear una nueva imagen a través de las anotaciones de la conservación lógica}
-
-
-
-%\todo[inline]{P4.5.3 Ejemplo de dos containers distintos como se que me falta}
-
-
-%\todo[inline] Best practices to ensure reproducibility utilizando docker
