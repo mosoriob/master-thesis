@@ -10,6 +10,7 @@ then
 if [ $1 = $clean ]; then
 	echo "Cleaning please wait ..."
 	rm -f *~
+        rm -rf .texpadtmp/
 	rm -rf *.aux
 	rm -rf *.bbl
 	rm -rf *.blg

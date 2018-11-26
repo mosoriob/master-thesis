@@ -195,6 +195,81 @@ Por omisión, la conexión se realiza gracias al host que provee un \emph{Virtua
 Además para controlan la cantidad de recursos como CPU, memoria, \emph{disk I/O} que el contenedor puede utilizar se utiliza \emph{Cgroups}. A partir de esto se protege contra ataques de DoS.
 
 
+
+
+\section{Clair}\label{sec:clair}
+
+Clair es un proyecto de código abierto para el análisis estático de vulnerabilidades en contenedores de aplicaciones (actualmente incluyendo appc y docker).
+   
+En intervalos regulares, Clair ingiere metadatos de vulnerabilidad de un conjunto configurado de fuentes y los almacena en la base de datos. 
+Para analizar las imágenes, los clientes utilizan la API de Clair para indexar sus imágenes; esto crea una lista de características presentes en la imagen y las almacena en la base de datos.
+
+Clair define su propia terminología:
+
+\begin{description}
+	\item [Feature:] cualquiera sea que éste presente en el sistema de archivos que sea una indicación de una vulnerabilidad (e.g. presencia de un archivo o paquete)
+	\item [Feature Namespace:] contexto de \emph{feature} o vulnerabilidades (e.g. un sistema operativo o lenguaje)
+	\item [Vulnerability Source (vulnsr):]  el componente de Clair que rastrea los datos de vulnerabilidad y los importa a la base de datos de Clair
+	\item [Vulnerability Metadata Source (vulnmdsrc):]  el componente de Clair que rastrea los metadatos de vulnerabilidad y los asocia con las vulnerabilidades en la base de datos de Clair
+\end{description}
+
+Clair se componente de distintos controladores (\emph{drivers}).
+
+\begin{description}
+	\item [featurefmt:] identifica el formato de las funcionalidades de una capa (e.g. apt).
+	\item [featurens:] identifica cuáles son los \emph{namespaces} que son aplicables a la capa (e.g. ubuntu 16.04).
+	\item [imagefmt:] determina la ubicación del sistema de archivos raíz de la capa (e.g. Docker).
+	\item [versionfmt:] determina y compara los strings de la versión (e.g. rpm).
+	\item [vulnmdsrc:] descarga los metadatos de las vulnerabilidades para ser procesados (e.g. National vulnerability database - NVD \footnote{\url{https://nvd.nist.gov/}} ) .
+	\item [vulnsrc:] descarga las vulnerabilidades para un conjunto de \emph{namespaces} (e.g. \emph{Alpine Security Database of Backported fixes})
+\end{description}
+
+La figura \ref{table:clair-datasources} muestra los drivers implementados por Clair.
+
+\begin{table}[]
+\begin{tabular}{|l|l|l|l|}
+\hline
+Fuente de datos             & Datos recolectados                                                                                                          & Formato & Licencia \\ \hline
+Debian Security Bug Tracker & \emph{Namespaces:} Debian 6, 7, 8 y inestable                                                                               & dpkg    & Debian   \\ \hline
+Ubuntu CVE Tracker          & \begin{tabular}[c]{@{}l@{}}\emph{Namespaces:} Ubuntu 12.04, 12.10,\\  13.04, 14.04, 14.10, 15.04, 15.10, 16.04\end{tabular} & dpkg    & GPLv2    \\ \hline
+Red Hat Security Data       & \emph{Namespaces:} CentOS 5, 6, 7                                                                                           & rpm     & CVRF     \\ \hline
+Oracle Linux Security Data  & \emph{Namespaces:} Oracle Linux 5, 6, 7                                                                                     & rpm     & CVRF     \\ \hline
+Alpine SecDB                & \begin{tabular}[c]{@{}l@{}}\emph{Namespaces:} Alpine 3.3, Alpine 3.4, \\ \\ Alpine 3.5\end{tabular}                         & apk     & MIT      \\ \hline
+NIST NVD                    & Metadatos genéricos de vulnerabilidades                                                                                     & N/A     & Public   \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Sistemas de paquetes}
+
+Un gestor de paquetes es un conjunto de herramientas de software que automatiza el proceso de instalación, actualización, configuración y eliminación de programas informáticos para el sistema operativo de un ordenador de forma coherente.
+
+Un gestor de paquetes se ocupa de paquetes, distribuciones de software y datos en ficheros de archivo. Los paquetes contienen metadatos, como el nombre del software, la descripción de su propósito, el número de versión, el proveedor, la suma de comprobación y una lista de dependencias necesarias para que el software funcione correctamente. 
+
+Tras la instalación, los metadatos se almacenan en una base de datos de paquetes local. Esta base de datos se guarda en un archivo en el sistema de archivos. Por lo tanto, la información de los componentes del software de una imagen se encuentra en cada una de sus capas.
+Dependiendo del sistema de paquetes, se puede utilizar otras herramientas para obtener mayor información utilizando la información que se encuentra en la base de datos
+
+
+\subsection{rpm}
+RPM Package Manager (RPM) es un sistema de empaquetado abierto, que se ejecuta en Red Hat Enterprise Linux así como en otros sistemas Linux y UNIX.
+El archivo de base de datos de rpm se encuentra ubicado en \verb|/var/lib/rpm/Packages|. La información disponible en ese archivo es: Nombre, Versión, Lanzamiento, Arquitectura, Fecha de instalación, Grupo, Tamaño, Licencia, Firma, RPM de origen, Fecha de construcción,  Host de reconstrucción, Proveedor del paquete, URL, Resumen y  Descripción.
+\subsection{dpkg}
+
+Debian Package Manager (dpkg) es un sistema de gestión de paquetes en el sistema operativo libre Debian y sus numerosos derivados. dpkg se utiliza para instalar, eliminar y proporcionar información sobre los paquetes .deb. 
+
+El archivo de base de datos de dpkg se encuentra ubicado en \verb|/var/lib/dpkg/status| utilizando formato texto plano.  La información disponible es:  Paquete, Estado, Prioridad, Sección, Tamaño de la instalación, Encargado del mantenimiento, Arquitectura, Fuente, Versión, Reemplaza, Dependencias y Recomiendaciones.
+
+\subsection{apk}
+
+apk es un sistema de gestión de paquetes en el sistema operativo Alpine. apk se utiliza para instalar, eliminar y propocionar información sobre los paquetes .apk. 
+El archivo de base de datos de apk se encuentra ubicado en \verb|/var/lib/rpm/Packages|. La información disponible se basa la especificación de apk \footnote{\url{https://wiki.alpinelinux.org/wiki/Apk_spec}}: Arquitectura, Suma del pull, Dependencias, Ruta de archivos, Tamaño, Licencia, Nombre del paquete, Descripción, URL, git commit del paquetes, tiempo de construcción, entre otros. 
+
+
+
+\subsection{Conda}
+Conda es un gestor de paquetes, dependencias y entornos para lenguajes Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN y que es ampliamente utilizado en entornos de \textit{Jupyter notebook}.
+
+El archivo de base de datos de conda se encuentra ubicado en \verb|conda/history| según la posición del ambiente. La información disponible se basa la especificación de apk \footnote{\url{https://conda.io/docs/user-guide/tasks/build-packages/package-spec.html}}: Nombre, version, versión de construcción, número de construcción, dependencias, arquitectura, plataforma y archivos.
+
 \section{Web Semantica}
 
 La web semántica es un extensión \emph{World Wide Web} añadiendo un conjunto de estándares  diseñado por la \emph{World Wide Web Consortium} con el objetivo de la creación de tecnologías para publicar datos legibles por aplicaciones informáticas. Para lo lograr lo anterior, se añaden metadatos semánticos y ontologías para describir el contenido y generar relaciones entre los datos, esta representación se realiza de una manera formal.
@@ -204,28 +279,15 @@ El término fue acuñado por Tim Berners-Lee para una red de datos que puede ser
 
 Es por ello que la web semántica ha definido diversos estándares para construir una descripción formal de los conceptos, términos y relaciones.  Estos estándares definidos por W3C incluyen: RDF, RDFS, SPARQL, Notation3 (N3), N-Triples, Turtle y OWL.
 
-% Para lograr los objetivos de la Web Semántica se han generado múltiples estándares de representación como son XML, XML Schema, RDF, RDF Schema, OWL y SPARQL.
-
 \subsection{RDF}\label{sw:rdf}
-RDF (del inglés \emph{Resource Description Framework}) es una familia de
-especificaciones del W3C diseñada como un modelo de datos para metadatos.
-Fue adoptado como una recomendación del W3C en 1999, mientras que la
-especificación 1.0 fue publicada el 2004 y la 1.1 el
-2014\cite{bikakis2013semantic}.
+RDF (del inglés \emph{Resource Description Framework}) es un modelo estándar para el intercambio de datos en la Web. Fue adoptado como una recomendación del W3C en 1999, mientras que la especificación 1.0 fue publicada el 2004 y la 1.1 el 2014\cite{bikakis2013semantic}.
 
-El modelo de datos RDF se basa en la idea de hacer declaraciones sobre 
-recursos Web (URIs) en forma de expresiones $\langle sujeto, predicado, objeto
-\rangle$ que son llamados triples RDF.
-El $sujeto$ indica el recurso mientras que el $predicado$ denota la relación de
-éste con el $objeto$.
-Así podemos decir que un triple RDF sigue la clásica notación \tt{entidad} - 
-\tt{atributo} - \tt{valor} de los modelos orientados a objetos, permitiendo
-además, gracias a su simpleza, modelar todo tipo de conceptos abstractos.
+RDF extiende la estructura de enlace de la Web para usar URIs para nombrar la relación entre las cosas así como los dos extremos del enlace (esto se conoce como un ``triple"). Un triple tiene la forma de expresión  $\langle sujeto, predicado, objeto \rangle$. Donde el $sujeto$ indica el recurso, el $predicado$ nombra la relación entre el $sujeto$ y $el objeto$
 
 \subsection{RDFS}
-RDFS (de las siglas del íngles \emph{Resource Description Framework Schema},
+RDFS (de las siglas del inglés \emph{Resource Description Framework Schema},
 también llamado RDF Schema) es un vocabulario que extiende RDF proveyendo un
-set de clases y propiedades que mejoran la creación de modelos como son:
+conjunto de clases y propiedades que mejoran la creación de modelos como son:
 \tt{Class} para declarar clases, \tt{subClassOf} para denotar herencia,
 \tt{range} y \tt{domain} para el rango y dominio de cierta propiedad
 (\tt{rdf:Property}), entre otras.
@@ -244,8 +306,3 @@ La versión actual de OWL se conoce como ``OWL 2'' y fue publicada el 2009 como
 una revisión y extensión de la versión inicial publicada el
 2004\cite{bikakis2013semantic}. Generalmente cuando se habla de ``OWL'' nos
 referimos a la versión del 2004.
-
-
-\section{Sistemas de paquetes y vulnerabilidades}
-
-
