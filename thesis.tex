@@ -18,9 +18,8 @@
 \usepackage[noend]{algpseudocode}
 \usepackage{subcaption}
 
-\usepackage[draft]{todonotes}
 \usepackage{listings}
-\usepackage{xcolor}
+\usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
 \colorlet{punct}{red!60!black}
 \definecolor{background}{HTML}{FFFFFF}
 \definecolor{delim}{RGB}{20,105,176}
@@ -96,6 +95,10 @@
 	\renewcommand{\footrulewidth}{0.1pt}
 }
 %\setlength{\footheight}{110pt} 
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
 
 %macros
 \renewcommand{\tt}[1]{\texttt{#1}}
