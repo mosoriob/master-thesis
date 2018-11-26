@@ -45,7 +45,7 @@ Los principales requisitos de pegasus son: Java (la versión Java depende de la 
 \begin{figure}[t]
 \centering
 \includegraphics[width=.5\textwidth]{Figures/pegasus-deps}
-\caption{Dependencias de Pegasus. En azul: dependencias necesarias y especificadas en el sistema de paquetes. En verde: necesarias pero no especificadas en el sistema de paquetes. En naranjas: dependencias recomendadas}
+\caption[Dependencias Pegasus]{Dependencias de Pegasus. En azul: dependencias necesarias y especificadas en el sistema de paquetes. En verde: necesarias pero no especificadas en el sistema de paquetes. En naranjas: dependencias recomendadas}
 \label{fig:pegasus-deps}
 \end{figure}
 
@@ -60,7 +60,7 @@ La figura \ref{fig:soykb} muestra una representación gráfica del workflow, don
 \begin{figure}[t]
 \centering
 \includegraphics[width=.5\textwidth]{Figures/workflow-genome}
-\caption{Representación entregada por Pegasus del workflow SoyKB.}\label{fig:soykb}
+\caption[Representación workflow: SoyKb]{Representación entregada por Pegasus del workflow SoyKB.}\label{fig:soykb}
 \end{figure}
 
 Los componentes de software utilizados por SoyKB se clasifican en dos tipos: propio (en amarillo) y de terceros (en verde). Los componentes principales son: bwa, gatk y picard y el software de tercero java-1.7.0
@@ -68,7 +68,7 @@ Los componentes de software utilizados por SoyKB se clasifican en dos tipos: pro
 \begin{figure}[t]
 \centering
 \includegraphics[width=.8\textwidth]{Figures/soykb-deps}
-\caption{Dependencias de SoyKb. En amarillo: software propio y en verde software de terceros}\label{fig:soykb-deps} 
+\caption[Dependencias workflow SoyKb]{Dependencias de SoyKb. En amarillo: software propio y en verde software de terceros}\label{fig:soykb-deps} 
 \end{figure}
 
 La evaluación de los resultados se realizó de forma manual al igual que en \cite{santana2017reproducibility} debido a los pasos aleatorios del workflow. La metodología de la verificación fue la revisión de la estructura de los resultados, el tamaño de los archivos, número de líneas y la inexistencia de errores.
@@ -84,7 +84,7 @@ Debido a que el software es un binario, no se encuentra empaquetado. Por lo tant
 \begin{figure}[t]
 \centering
 \includegraphics[width=.5\textwidth]{Figures/montage}
-\caption{Representación entregada por Pegasus del workflow Montage. Cada uno de los nodos es una operación y la leyenda indica el nombre de la operación.}\label{fig:montage}
+\caption[Representación workflow: Montage]{Representación entregada por Pegasus del workflow Montage. Cada uno de los nodos es una operación y la leyenda indica el nombre de la operación.}\label{fig:montage}
 \end{figure}
 
 Dado que los resultados de Montage son imágenes se utiliza la herramienta de hash perceptual \footnote{\url{http://phash.org}} para realizar la comparación entre la imagen reproducida (imagen del cielo de 0,1 grados) frente a la original.
@@ -96,17 +96,17 @@ Las figuras \ref{fig:montage-wicus} y \ref{fig:montage-mosorio} muestran las im�
     \begin{subfigure}[b]{0.4\textwidth}
          \centering
          \includegraphics[width=\textwidth]{Figures/montage-original}
-         \caption{Resultados originales obtenidos desde WICUS}
+         \caption[Resultados workflow original: Montage]{Resultados originales obtenidos desde WICUS}
          \label{fig:montage-wicus}
      \end{subfigure}
          ~ 
 	    \begin{subfigure}[b]{0.4\textwidth}
          \centering
          \includegraphics[width=\textwidth]{Figures/montage-mosorio}
-         \caption{Resultados reproducidos por nuestra propuesta}
+         \caption[Resultados workflow reproducidos: Montage]{Resultados reproducidos por nuestra propuesta}
          \label{fig:montage-mosorio}
      \end{subfigure}
-        \caption{Los resultados obtenidos con el nuevo ambiente son iguales}
+        \caption[Comparación resultados Montage]{Los resultados obtenidos con el nuevo ambiente son iguales}
         \label{fig:montage-results}
 \end{figure*}
 
@@ -131,7 +131,7 @@ El workflow primero lee el archivo de entregada que contiene la declinación y a
 \begin{figure}[t]
 \centering
 \includegraphics[width=.8\textwidth]{Figures/internal-extinction}
-\caption{Pasos necesarios para el workflow Internal extinction}\label{fig:internal}
+\caption[Representación workflow: Internal Extinction]{Pasos necesarios para el workflow Internal Extinction}\label{fig:internal}
 \end{figure}
 
 Nuestra investigación inicial sobre las dependencias para la ejecución de Internal extinction muestra que el software principal requeridos es el siguiente:  \verb|requests==2.20.0|, \verb|python=2.7.15=h33da82c_4|, \verb|numpy=1.15.0=py27h1b885b7_0| y \verb|astropy==2.0.9|
@@ -147,14 +147,14 @@ El objetivo del workflow es la previsión de riesgos producidos por terremotos y
 
 Para lograr desarrollo de métodos fiables de evaluación de riesgos para estas amenazas requiere un análisis en tiempo real de los datos sísmicos y un pronóstico verdaderamente prospectivo y pruebas para reducir los sesgos.
 
-xcorr logra lo anterior a través de dos etapas, la primera etapa es un pre-procesamiento de series de tiempo de una estación sísmica llamadas trazas, en esta etapa se realiza una serie de tratamientos y el procesamiento de cada traza es independiente del procesamiento de otras trazas, haciendo que esta fase sea paralela. 
+\texttt{xcorr} logra lo anterior a través de dos etapas, la primera etapa es un pre-procesamiento de series de tiempo de una estación sísmica llamadas trazas, en esta etapa se realiza una serie de tratamientos y el procesamiento de cada traza es independiente del procesamiento de otras trazas, haciendo que esta fase sea paralela. 
 Luego la segunda etapa empareja todas las estaciones y calcula la correlación cruzada para cada par. La figura \ref{fig:xcorr} muestra los pasos del workflow.
 
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=.8\textwidth]{Figures/xcorr}
-\caption{Pasos necesarios para el workflow Internal extinction}\label{fig:xcorr}
+\caption[Representación workflow: Seismic Ambient Noise Cross-Correlation]{Representación workflow: Seismic Ambient Noise Cross-Correlation}\label{fig:xcorr}
 \end{figure}
 
 
@@ -187,7 +187,8 @@ El USGS MODFLOW-NWT es una formulación de Newton-Raphson para MODFLOW-2005 con 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.6\textwidth]{Figures/usgs-modflow-nwt}
-\caption{Figure caption.}\label{fig:modflow}
+\caption{Representación workflow: MODFLOW-NWT}
+\label{fig:modflow}
 \end{figure}
 
 
@@ -198,17 +199,17 @@ La figura \ref{fig:modflow} muestra la estructura principal del workflow, desarr
     \begin{subfigure}[b]{\textwidth}
          \centering
          \includegraphics[width=\textwidth]{Figures/viz-original}
-         \caption{Resultados originales entregados por el Information Sciences Institute}
+         \caption[Resultados workflow originales: ModFlow]{Resultados originales entregados por el Information Sciences Institute}
          \label{fig:modflow-original}
      \end{subfigure}
 	
 	    \begin{subfigure}[b]{\textwidth}
          \centering
          \includegraphics[width=\textwidth]{Figures/viz-reproduced}
-         \caption{Resultados reproducidos por nuestra propuesta}
+        \caption[Resultados workflow reproducidos: ModFlow]{Resultados reproducidos por nuestra propuesta}
          \label{fig:modflow-reproduced}
      \end{subfigure}
-        \caption{Los resultados obtenidos con el nuevo ambiente son iguales}
+        \caption[Comparación resultados MODFLOW-NEW]{Los resultados obtenidos son idénticos}
         \label{fig:both-modflow}
 \end{figure*}
 
@@ -238,7 +239,7 @@ CPU (Cores)& 4             & 2              & 4          \\ \hline
 CPU (Arch) & 64            & 64             & 64        \\ \hline
 OS         & Centos 7      & Debian 9       & Fedora 27 \\ \hline
 \end{tabular}
-\caption{Image appliances characteristics.}
+\caption{Características de hardware de pruebas.}
 \label{image-env}
 \end{table}
 
@@ -296,7 +297,7 @@ Para obtener las anotaciones, se propone e implementa usar Clair y construir un 
 
 \begin{figure*}[t]
 \includegraphics[width=\textwidth]{Figures/arch.pdf}
-\caption{El sistema anotador permite recibir la información de la imagen, consultar los componentes de software a nuestra versión de Clair, obtener metadatos desde el manifesto y almacenar la información en forma de triples en Apache Jena.}\label{fig:arch}
+\caption[Arquitectura sistema anotador]{El sistema anotador permite recibir la información de la imagen, consultar los componentes de software a nuestra versión de Clair, obtener metadatos desde el manifesto y almacenar la información en forma de triples en Apache Jena.}\label{fig:arch}
 \end{figure*}
 
 
@@ -395,17 +396,17 @@ La nueva imagen fue nombrada como: \verb|pegasus_workflow_images:4.8.5|
     \begin{subfigure}[b]{0.40\textwidth}
          \centering
          \includegraphics[width=\textwidth]{Figures/pegasus-49.pdf}
-         \caption{Dependencies graph Pegasus 4.9 and SoyKB}
+         \caption{Gráfico de dependencias Pegasus 4.9 y SoyKB}
          \label{fig:pegasus49}
      \end{subfigure}
     ~ 
     \begin{subfigure}[b]{0.40\textwidth}
          \centering
          \includegraphics[width=\textwidth]{Figures/pegasus-48.pdf}
-         \caption{Dependencies graph Pegasus 4.8 and SoyKB}
+         \caption{Gráfico de dependencias Pegasus 4.8 y SoyKB}
          \label{fig:pegasus48}
      \end{subfigure}
-        \caption{The orange nodes are the differences between the images}
+        \caption{Análisis de dependencias imágenes Pegasus}
         \label{fig:dependencies-graph}
 \end{figure*}
 
@@ -421,6 +422,6 @@ Enfoque        & Pegasus (MB) & dispel4py (MB) \\ \hline
 Virtualization & 1929         & 3509 \\ \hline
 Container      & 690          & 2500 \\ \hline
 \end{tabular}
-\caption{Uso de disco de las imágenes pegasus y dispel4py utilizando máquinas virtuales y containers}
+\caption[Comparación de uso de disco entre VMs y contenedores]{Uso de disco de las imágenes pegasus y dispel4py utilizando máquinas virtuales y contenedores}
 \label{storage-reduce}
 \end{table}

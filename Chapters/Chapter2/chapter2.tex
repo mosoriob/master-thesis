@@ -113,17 +113,17 @@ Sin embargo, los contenedores son ambientes aislados y con recursos limitados y 
     \begin{subfigure}[b]{0.5\textwidth}
          \centering
     	\includegraphics[width=0.5\textwidth]{Figures/containers.png}
-    	\caption{Virtualización basada en contenedores: los contenedores comparten el sistema operativo del host y por lo tanto no necesitan una copia.}
+    	\caption[Virtualización basada en contenedores]{Virtualización basada en contenedores: los contenedores comparten el sistema operativo del host y por lo tanto no necesitan una copia.}
     	\label{fig:contenedor-arch}
      \end{subfigure}
     ~ 
     \begin{subfigure}[b]{0.5\textwidth}
          \centering
     	\includegraphics[width=0.5\textwidth]{Figures/virtual.png}
-    	\caption{Virtualización basada en máquinas virtuales: las máquinas virtuales requieren un sistema operativo para cada uno.}
+    	\caption[Virtualización basada en máquinas virtuales]{Virtualización basada en máquinas virtuales: las máquinas virtuales requieren un sistema operativo para cada uno.}
     	\label{fig:vm-arch}
      \end{subfigure}
-        \caption{Dado que un contenedor comparte recursos, esto reduce significativamente el uso de almacenamiento en comparación a las máquinas virtuales.}
+        \caption[Comparación entre virtualizacion basada de contenedores y máquinas virtuales]{Dado que un contenedor comparte recursos, esto reduce significativamente el uso de almacenamiento en comparación a las máquinas virtuales.}
         \label{fig:virtualization}
 \end{figure*}
 
@@ -142,7 +142,7 @@ Docker Engine es una herramienta liviana y portable para administrar la virtuali
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.3\textwidth]{Figures/docker.png}
-    \caption{Docker}
+    \caption{Arquitectura de Docker}
     \label{fig:docker}
 \end{figure}
 
@@ -151,7 +151,7 @@ Una imagen de Docker (\textit{Docker Image}) es una plantilla de solo lectura. P
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.6\textwidth]{Figures/docker-filesystems-multilayer}
-    \caption{Las imágenes Docker con compuestas por capas. 
+    \caption[Capas de una imagen de Docker]{Las imágenes Docker con compuestas por capas. 
     La última capa (a1886ebc75ae) es la única capa en modo escritura.}
     \label{fig:arquitectura}
 \end{figure}	
