@@ -1,11 +1,4 @@
-% Chapter 1
-
-\chapter{Estado del arte} % Main chapter title
-
-\label{Chapter2} % For referencing the chapter elsewhere, use \ref{Chapter1}
-
-
-
+\chapter{Estado del arte}\label{Chapter2} 
 \section{Conservación de procedimiento científicos}
 
 Distintas áreas de la ciencia han adoptado técnicas y herramientas para conservar el procedimiento. Por ejemplo, investigadores en bio-informática ha incorporado los workflows para distintos análisis: 
@@ -39,25 +32,26 @@ Un WMS puede ser considerado como una capa intermedia necesaria para la abstracc
 
 Actualmente, existen múltiples WMS que han sido generado por diversas comunidades.
 \subsection{Galaxy}	
-Galaxy \citep{goecks2010galaxy} is a web-based WMS that aims to bring computational data analysis capabilities to non-expert users in the biological sciences domain. The main goals of the Galaxy framework are accessibility to biological computational capabilities and reproducibility of the analysis result by tracking the information related to every step on the process. 
-
+%todo: mejorar esto
+Galaxy \cite{goecks2010galaxy} es un sistema de gestión de almacenes basado en la web que tiene como objetivo llevar las capacidades de análisis de datos computacionales a usuarios no expertos en el campo de las ciencias biológicas. Los principales objetivos del marco de trabajo de Galaxy son la accesibilidad a las capacidades computacionales biológicas y la reproducibilidad del resultado del análisis mediante el seguimiento de la información relacionada con cada paso del proceso. 
+%todo: mejorar esto
 \subsection{Taverna}	
-Taverna \cite{DBLP:journals/bioinformatics/OinnAFMSGCGPWL04} is a Web Service-based WMS, as all the components of the workflow must be implemented as web services (either locally or using an available remote service). Taverna is able to integrate Soaplab26, REST (Fielding, 2000) and WSDL (Christensen et al., 2001) web services. It offers a wide range of services for different processing capabilities, such as local Java services, statistical R processor services, XPath scripts, or spreadsheet import services.
-
+Taverna \cite{DBLP:journals/bioinformatics/OinnAFMSGCGPWL04} es un WMS basado en servicios web, ya que todos los componentes del flujo de trabajo deben implementarse como servicios web (ya sea localmente o utilizando un servicio remoto disponible). Taverna es capaz de integrar los servicios web de Soaplab26, REST (Fielding, 2000) y WSDL (Christensen et al., 2001). Ofrece una amplia gama de servicios para diferentes capacidades de procesamiento, tales como servicios Java locales, servicios de procesador R estadístico, scripts XPath o servicios de importación de hojas de cálculo.
+%todo: mejorar esto
 \subsection{Pegasus}
-Pegasus \cite{deelman2004pegasus} is a WMS able to manage workflows comprised of millions of tasks, recording data about the execution and intermediate results. In Pegasus, workflows are described as abstract workflows, which do not contain resource informa- tion, or the physical locations of data and executables.
-
+Pegasus \cite{deelman2004pegasus} es un WMS capaz de gestionar flujos de trabajo compuestos por millones de tareas, registrando datos sobre la ejecución y resultados intermedios. En Pegasus, los flujos de trabajo se describen como flujos de trabajo abstractos, que no contienen información de recursos, o las ubicaciones físicas de datos y ejecutables.
+%todo: mejorar esto
 \subsection{WINGS} 
-WINGS \cite{DBLP:journals/expert/GilRKGGMD11}  may not be considered as a proper WMS by itself, as it does not provide workflow enactment and execution features. However it is widely known for workflow design. WINGS can be seen as a top-level and domain-oriented design tool whose workflows can be later enacted in different workflow engines, such as Pegasus or Apache OODT29.
-
+WINGS \cite{DBLP:journals/expert/GilRKGGMD11}  no puede ser considerado como un WMS apropiado por sí mismo, ya que no proporciona características de ejecución y promulgación del flujo de trabajo. Sin embargo, es ampliamente conocido por el diseño del flujo de trabajo. WINGS puede considerarse como una herramienta de diseño de alto nivel y orientada a los dominios, cuyos flujos de trabajo pueden ejecutarse posteriormente en diferentes motores de flujo de trabajo, como Pegasus o Apache OODT29.
+%todo: mejorar esto
 \subsection{dispel4py}
-dispel4py \cite{DBLP:conf/eScience/FilgueiraKAKSS15}  is a Python (Rossum, 1995) library for describing workflows. It describes abstract workflows for data-intensive applications, which are later translated and enacted in distributed platforms (e.g. Apache Storm, MPI clusters, etc.).
+dispel4py \cite{DBLP:conf/eScience/FilgueiraKAKSS15}  es una biblioteca Python (Rossum, 1995) para describir flujos de trabajo. Describe flujos de trabajo abstractos para aplicaciones intensivas en datos, que luego se traducen y ejecutan en plataformas distribuidas (por ejemplo, Apache Storm, clusters MPI, etc.).
 
 \section{Conservación de equipamiento}
 Comúnmente el equipamiento en otras disciplinas no es un problema a resolver dado que los recursos utilizados son son conocidos, no-variables y estándares. Por ejemplo, la utilización de probetas, microscopios u otros elementos físicos. 
 Consecuentemente, los investigadores pueden nombrarlos e identificarlos de forma manual en los procedimientos de sus cuadernos de laboratorio. Lo que permite que otro investigador conozca cuáles fueron las herramientas utilizadas en el experimento.
 Aunque existen excepciones como en la ciencia de biología, donde ciertos recursos son materiales que son utilizados en los procedimientos. En estos casos, los investigadores deben describir los materiales incluyendo información como marcas, composición y otros. 
-En otras ciencias como la astronomía se utilizan recursos  de alta tecnología, donde también es necesario documentar las características de hardware y configuraciones utilizadas en el proceso experimental. 
+En otras ciencias cómo la astronomía se utilizan recursos  de alta tecnología, donde también es necesario documentar las características de hardware y configuraciones utilizadas en el proceso experimental. 
 En las ciencias de la computación sucede un caso similar, dado que los recursos computacionales son una componente requerida en la ejecución del sistema. 
 Es por ello, que esta comunidad no puede ser la excepción respecto a la descripción de los recursos. Por lo tanto, los autores deben poder documentar computadores, clusters, servicios web, componentes de software, etc., en el contexto de sus experimentos.
 
@@ -114,23 +108,24 @@ Estos ambientes son nombrados con contenedores (contenedores).
 Para el sistema operativo del \textit{host}, los procesos del contenedor no son especiales y se tratan como cualquier otro proceso que ejecuta sobre el kernel. 
 Sin embargo, los contenedores son ambientes aislados y con recursos limitados y estas carácteristicas se lograr a través de herramientas del Kernel \cite{merkel2014docker}.
 	
-	\begin{figure}[]
-  		\centering
-    	\includegraphics[width=0.35\textwidth]{Figures/containers.png}
-    	\caption{contenedor-based virtualization.}
+\begin{figure*}[]
+    \centering
+    \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+    	\includegraphics[width=0.5\textwidth]{Figures/containers.png}
+    	\caption{Virtualización basada en contenedores: los contenedores comparten el sistema operativo del host y por lo tanto no necesitan una copia.}
     	\label{fig:contenedor-arch}
-	\end{figure}
-	Por otra parte \textit{hypervisor-based} establece una máquina virtual (\textit{virtual
-	machine})   encima del sistema operativo, cada máquina virtual (VM) no solamente
-	incluye la aplicación y las dependencias sino además incluye el sistema 
-	operativo completo con otro kernel separado.
-
-	\begin{figure}[]
- 		\centering
-    	\includegraphics[width=0.3\textwidth]{Figures/virtual.png}
-    	\caption{Hypervisor-based virtualization.}
+     \end{subfigure}
+    ~ 
+    \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+    	\includegraphics[width=0.5\textwidth]{Figures/virtual.png}
+    	\caption{Virtualización basada en máquinas virtuales: las máquinas virtuales requieren un sistema operativo para cada uno.}
     	\label{fig:vm-arch}
-	\end{figure}
+     \end{subfigure}
+        \caption{Dado que un contenedor comparte recursos, esto reduce significativamente el uso de almacenamiento en comparación a las máquinas virtuales.}
+        \label{fig:dependencies-graph}
+\end{figure*}
 
 Las diferencias entre la virtualización basada en contenedores y máquinas virtuales presentan características interesantes para la ejecución de aplicaciones y workflows. Dado que un contenedor comparte recursos con el sistema operativo, como las bibliotecas, ésto reduce significativamente la necesidad de reproducir el código del sistema operativo, y significa que un servidor puede ejecutar varios ambientes con una sola instalación del sistema operativo. 
 Por lo tanto, los contenedores son excepcionalmente ligeros: sólo tienen un tamaño de megabytes y sólo tardan unos segundos en arrancar. En comparación con los contenedores, las máquinas virtuales tardan minutos en funcionar y son un orden de magnitud mayor que un contenedor equivalente. \cite{padala2007performance,regola2010recommendations,felter2014updated}. A partir de esto nace la motivación de la utilización de contenedores con una alternativa para alcanzar la conservación física de los ambientes.
@@ -148,17 +143,17 @@ Docker Engine es una herramienta liviana y portable para administrar la virtuali
 \end{figure}
 
 Docker utiliza una arquitectura de cliente-servidor, Docker Client interactua con Docker Daemon y este construye, maneja y corre los contenedores. Docker Client y Docker Daemon pueden correr en el mismo host o se puede conectar el cliente desde un host remoto. El cliente y el Daemon se comunican en forma de sockets o RESTful API \cite{Docker:2015:understanding}.
-Una imagen de Docker (\textit{Docker Image}) es una plantilla de solo lectura. Por ejemplo, una imagen puede contener las herramientas básicas de Ubuntu con Apache y una aplicación web instalada o simplemente el sistema operativo. Las imágenes son usadas para construir \emph{Docker contenedores}. Cuando el usuario crea cambios en el contenedor, este cambio no se realiza en la imagen, sino  que Docker añade una capa adicional con los cambios de la imagen\cite{bui2015analysis}. Por ejemplo, si el usuario utiliza una imagen base de Debian, luego añade el paquete emacs y luego añade el paquete apache, el estado de capas estaría representado por la figura \ref{fig:arquitectura} \cite{Docker:2015:Online}. Esto permite tener un proceso de distribución de imágenes más eficiente dado que solo es necesario distribuir las actualizaciones \cite{bui2015analysis}. El\textit{filesystem} descrito anteriormente se denomina una sistema de archivo basado en capas.
+Una imagen de Docker (\textit{Docker Image}) es una plantilla de solo lectura. Por ejemplo, una imagen puede contener las herramientas básicas de Ubuntu con Apache y una aplicación web instalada o simplemente el sistema operativo. Las imágenes son usadas para construir \emph{Docker contenedores}. Cuando el usuario crea cambios en el contenedor, este cambio no se realiza en la imagen, sino  que Docker añade una capa adicional con los cambios de la imagen\cite{bui2015analysis}. Por ejemplo, si el usuario utiliza una imagen base de Debian, luego añade el paquete emacs y luego añade el paquete apache, el estado de capas estaría representado por la figura \ref{fig:arquitectura} \cite{Docker:2015:Online}. Esto permite tener un proceso de distribución de imágenes más eficiente dado que solo es necesario distribuir las actualizaciones \cite{bui2015analysis}. El sistema de archivos descrito anteriormente se denomina una sistema de archivo basado en capas.
 \begin{figure}[]
   \centering
   \includegraphics[width=0.6\textwidth]{Figures/docker-filesystems-multilayer}
-    \caption{Representación del sistema de archivos basado en capas}
+    \caption{Las imágenes Docker con compuestas por capas. La última capa (a1886ebc75ae) es la única capa en modo escritura.}
     \label{fig:arquitectura}
 \end{figure}	
 
 Docker Hub es un repositorio que almacena dos tipos de repositorios públicos, oficiales y comunitarios. Los repositorios oficiales contienen imágenes públicas y verificadas de empresas y proveedores de software de renombre, como Canonical, Nginx, Red Hat y el propio Docker. Al mismo tiempo, los repositorios comunitarios pueden ser repositorios públicos o privados creados por usuarios y organizaciones individuales, que comparten sus aplicaciones y resultados. 
 
-Usando ese reposotiorio y una línea de comandos, es posible descargar e implementar imágenes Docker localmente, ejecutando el contenedor en un entorno host, y ejecutando así el software dentro de la imagen. Los usuarios pueden crear y almacenar imágenes en el registro del Docker Hub, creando un archivo descriptor llamado Dockerfile o ampliando uno existente.  Este descriptor describe cuáles son los paquetes de software que estarán dentro de la imagen, construye la imagen y finalmente la sube al Docker Hub. Sin embargo, Docker Hub no controla qué paquetes hay en las imágenes, si la imagen se desplegará correctamente o si las imágenes pueden tener algún problema de seguridad. 
+Usando ese repositorio y una línea de comandos, es posible descargar e implementar imágenes Docker localmente, ejecutando el contenedor en un entorno host, y ejecutando así el software dentro de la imagen. Los usuarios pueden crear y almacenar imágenes en el registro del Docker Hub, creando un archivo descriptor llamado Dockerfile o ampliando uno existente.  Este descriptor describe cuáles son los paquetes de software que estarán dentro de la imagen, construye la imagen y finalmente la sube al Docker Hub. Sin embargo, Docker Hub no controla qué paquetes hay en las imágenes, si la imagen se desplegará correctamente o si las imágenes pueden tener algún problema de seguridad. 
 Así, las imágenes Docker funcionan como una caja negra, lo que significa que los usuarios saben sólo paquetes principales que se ejecutan dentro del contenedor pero no conocen los otros paquetes necesarios para ejecutarlo.
 Hay dos maneras de subir imágenes a un repositorio de usuario, ya sea enviar la imagen desde un host local o automatizando ese proceso desde un repositorio Github. Para enviar una imagen al Docker Hub, los usuarios necesitan nombrar sus imágenes locales usando su nombre de usuario Docker Hub, y el nombre del repositorio que han creado. Después, los usuarios añaden múltiples imágenes a un repositorio añadiéndole la versión \texttt{:<tag>}. Esta es toda la información que normalmente tienen las imágenes Docker en DockerHub, siendo por tanto casi imposible reproducir el entorno de ejecución si se modifica alguno de los paquetes de software utilizados dentro de las imágenes. 
  
@@ -171,9 +166,12 @@ Además, es posible que en el contenedor existan algunos componentes que no est�
 Los contenedores Docker consiste de un ambiente virtual con: con archivos de usuarios y metadata, cada contenedor es construido a partir de una imagen base como se mencionó anteriormente. 
 Esta imagen indica la base del contenedor y se asocia un proceso inicial, él cual debe correr cuando el contenedor es iniciado~\cite{Docker:2015:understanding}. Para describir los pasos incluidos en la creación de un contenedor, se ejemplificará con la creación de uno.
 
-\begin{verbatim}
+\begin{figure*}
+	\begin{lstlisting}[caption={Ejemplo de la ejecutación de un contenedor utilizando la imagen Docker},label={lst:tensorflow},language=bash]
 	docker run -i -t ubuntu /bin/bash
-\end{verbatim}
+\end{lstlisting}
+\end{figure*}
+
 	\begin{itemize}
 		\item \emph{Docker Client} le informa al Docker que debe correr un contenedor.
 		\item En este caso el comando \texttt{/bin/bash} será el proceso \texttt{init} o 0 del contenedor
@@ -198,6 +196,55 @@ Además para controlan la cantidad de recursos como CPU, memoria, \emph{disk I/O
 
 
 \section{Web Semantica}
+
+La web semántica es un extensión \emph{World Wide Web} añadiendo un conjunto de estándares  diseñado por la \emph{World Wide Web Consortium} con el objetivo de la creación de tecnologías para publicar datos legibles por aplicaciones informáticas. Para lo lograr lo anterior, se añaden metadatos semánticos y ontologías para describir el contenido y generar relaciones entre los datos, esta representación se realiza de una manera formal.
+Consecuentemente, la información disponible pueden ser procesadas de manera automática mejorando la inter operatividad  entre distintos sistemas informáticos que realizan búsquedas sin operadores humanos.
+
+El término fue acuñado por Tim Berners-Lee para una red de datos que puede ser procesada por máquinas es decir, una red en la que gran parte del significado es legible por máquinas. En \cite{berners1992world} se afirma la necesidad de que los datos se transformen desde objetos legible por personas a información semántica diseñada para las máquinas.
+
+Es por ello que la web semántica ha definido diversos estándares para construir una descripción formal de los conceptos, términos y relaciones.  Estos estándares definidos por W3C incluyen: RDF, RDFS, SPARQL, Notation3 (N3), N-Triples, Turtle y OWL.
+
+% Para lograr los objetivos de la Web Semántica se han generado múltiples estándares de representación como son XML, XML Schema, RDF, RDF Schema, OWL y SPARQL.
+
+\subsection{RDF}\label{sw:rdf}
+RDF (del inglés \emph{Resource Description Framework}) es una familia de
+especificaciones del W3C diseñada como un modelo de datos para metadatos.
+Fue adoptado como una recomendación del W3C en 1999, mientras que la
+especificación 1.0 fue publicada el 2004 y la 1.1 el
+2014\cite{bikakis2013semantic}.
+
+El modelo de datos RDF se basa en la idea de hacer declaraciones sobre 
+recursos Web (URIs) en forma de expresiones $\langle sujeto, predicado, objeto
+\rangle$ que son llamados triples RDF.
+El $sujeto$ indica el recurso mientras que el $predicado$ denota la relación de
+éste con el $objeto$.
+Así podemos decir que un triple RDF sigue la clásica notación \tt{entidad} - 
+\tt{atributo} - \tt{valor} de los modelos orientados a objetos, permitiendo
+además, gracias a su simpleza, modelar todo tipo de conceptos abstractos.
+
+\subsection{RDFS}
+RDFS (de las siglas del íngles \emph{Resource Description Framework Schema},
+también llamado RDF Schema) es un vocabulario que extiende RDF proveyendo un
+set de clases y propiedades que mejoran la creación de modelos como son:
+\tt{Class} para declarar clases, \tt{subClassOf} para denotar herencia,
+\tt{range} y \tt{domain} para el rango y dominio de cierta propiedad
+(\tt{rdf:Property}), entre otras.
+
+RDF fue presentado en 1998 e introducido finalmente como recomendación del W3C
+el 2004\cite{bikakis2013semantic}.
+
+\subsection{OWL}
+OWL (del íngles \emph{Web Ontology Language}) es una familia de lenguajes para
+la creación de ontologías complejas.
+Agrega lógica computacional para que las relaciones
+hechas con este lenguaje puedan ser procesadas con el fin de verificar la
+consistencia de la información o generar información implicita.
+
+La versión actual de OWL se conoce como ``OWL 2'' y fue publicada el 2009 como 
+una revisión y extensión de la versión inicial publicada el
+2004\cite{bikakis2013semantic}. Generalmente cuando se habla de ``OWL'' nos
+referimos a la versión del 2004.
+
 
 \section{Sistemas de paquetes y vulnerabilidades}
 
