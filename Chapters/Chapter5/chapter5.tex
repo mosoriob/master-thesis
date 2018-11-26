@@ -15,23 +15,21 @@ En caso que el WMSs no distribuya su software utilizando Docker, se construye la
 Además, cada DeploymentFile incluye información sobre la imagen utilizando el estándar de la Open Container Initiative \footnote{\url{https://www.opencontainers.org/}} Esta información es:
  
 
-\begin{itemize}
-   \item orgopencontainers.image.created date and time on which the image was built (string, date-time as defined by RFC 3339).
-    \item orgopencontainers.image.authors contact details of the people or /item orgnization responsible for the image (freeform string)
-    \item orgopencontainers.image.url URL to find more information on the image (string)
-    \item orgopencontainers.image.documentation URL to get documentation on the image (string)
-    \item orgopencontainers.image.source URL to get source code for building the image (string)
-    \item orgopencontainers.image.version version of the packaged software
-        The version MAY match a label or tag in the source code repository
-        version MAY be Semantic versioning-compatible
-    \item orgopencontainers.image.revision Source control revision identifier for the packaged software.
-    \item orgopencontainers.image.vendor Name of the distributing entity, /item orgnization or individual.
-    \item orgopencontainers.image.licenses License(s) under which contained software is distributed as an SPDX License Expression.
-    \item orgopencontainers.image.ref.name Name of the reference for a target (string).  
-
-    \item orgopencontainers.image.title Human-readable title of the image (string)
-    \item orgopencontainers.image.description Human-readable description of the software packaged in the image (string)
-\end{itemize}
+\begin{description}
+   \item[org.opencontainers.image.created:] fecha y hora en la que se construyó la imagen (string, fecha y hora según la definición de RFC 3339).
+    \item [org.opencontainers.image.authors] datos de contacto de las personas u organizaciones responsables de la imagen (lista de forma libre)).
+    \item [org.opencontainers.image.url] URL para encontrar más información sobre la imagen (string).
+    \item [org.opencontainers.image.documentation] URL para obtener documentación sobre la imagen (string).
+    \item [org.opencontainers.image.source] URL para obtener el código fuente para construir la imagen (string).
+    \item [org.opencontainers.image.version] versión del software empaquetado
+        La versión puede coincidir con una etiqueta o tag en el repositorio de código fuente versión podría ser compatible con el versionado semántico.
+    \item [org.opencontainers.image.revision] Identificador de revisión de control de origen para el software empaquetado.
+    \item [org.opencontainers.image.vendor] Nombre de la entidad distribuidora, de la organización del artículo o del individuo.
+    \item [org.opencontainers.image.licenses] Licencia(s) bajo la(s) cual(es) el software contenido se distribuye.
+    \item [org.opencontainers.image.ref.name] Nombre de la referencia de un objetivo (string).  
+    \item [org.opencontainers.image.title] Título de la imagen legible por el ser humano (string)
+    \item [org.opencontainers.image.description] Descripción legible por un ser humano del software empaquetado en la imagen (string)
+\end{description}
 
 
 \subsection{Pegasus}
@@ -42,7 +40,7 @@ Pegasus lee las descripciones del flujo de trabajo de los archivos DAX. El térm
 Pegasus opcionalmente utiliza en HTCondor como administrador de tareas. Por lo tanto, construimos dos versiones para la imagen de Pegasus; una versión tiene ins
 talado el paquete condor y otra sin él. La justificación de decisión recae en permitir a los científicos utilizar una imagen simple si es necesario.
 El paquete Pegasus ha sido obtenido del repositorio oficial~\footnote{\url{http://download.pegasus.isi.edu/wms/download/debian}}.
-Los principales requisitos de pegasus son: Java (la versión Java depende de la versión pegasus), python y perl. La figura \ref{fig:pegasus-deps} muestra las dependencias especificadas tanto por el sistema de paquetes y documentación.
+Los principales requisitos de pegasus son: Java (la versión Java depende de la versión pegasus), Python y Perl. La figura \ref{fig:pegasus-deps} muestra las dependencias especificadas tanto por el sistema de paquetes y documentación.
 
 \begin{figure}[t]
 \centering
@@ -55,7 +53,7 @@ Las imágenes se encuentran disponibles en DockerHub~\footnote{\url{https://hub.
 
 \subsubsection{Soybean Knowledge Base}
 
-El workflow SoyKB (Soybean Knowledge Base) \cite{joshi2012soybean} permite realizar un proceso de re-secuencia de germoplasma de la soya, con el objetivo de estudiar rasgos como aceites, proteína, resistencia de los nemátodos del quiste de la soya y resistencia al estrés.
+El workflow SoyKB (Soybean Knowledge Base) \cite{joshi2012soybean} permite realizar un proceso de re-secuencia de germoplasma de la soya, con el objetivo de estudiar rasgos como aceites, proteína, resistencia de los nematodos del quiste de la soya y resistencia al estrés.
 Pegasus entrega este workflow que implementa tres operaciones: polimorfismo de nucleótido único (SNP), la operación insertar/remover (indel) de la base del genoma del organismo y una análisis utilizando el software GATK \footnote{\url{https://software.broadinstitute.org/gatk/}}
 La figura \ref{fig:soykb} muestra una representación gráfica del workflow, donde se realiza un análisis en paralelo de las muestras. Primero son alineadas con el genoma de referencia,  se identifica los indels y SNPs y luego se fusiona y filtra los resultados. 
 
@@ -119,7 +117,7 @@ Las figuras \ref{fig:montage-wicus} y \ref{fig:montage-mosorio} muestran las im�
 dispel4py ~\cite{DBLP:conf/eScience/FilgueiraKAKSS15} es una biblioteca Python para describir workflow para aplicaciones intensivas, que luego se traducen y ejecutan en plataformas distribuidas (por ejemplo, Apache Storm, clusters MPI, etc.).
 El paquete dispel4py ha sido obtenido del repositorio oficial \footnote{\url{https://github.com/rosafilgueira/dispel4py_workflows}}. 
 Para la instalación el paquete, utilizamos Conda, un gestor de paquetes, dependencias y entornos para lenguajes Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN y que es ampliamente utilizado en entornos de \textit{Jupyter notebook}. 
-Los principales requisitos de dispel4py obtenidos de la documentación son: python2.7, git y  python-setuptools
+Los principales requisitos de dispel4py obtenidos de la documentación son: Python2.7, git y  Python-setuptools
 Las imágenes se encuentran disponibles en DockerHub~\footnote{\url{https://hub.docker.com/r/dockerpedia//}}
 
 
@@ -133,7 +131,7 @@ El workflow primero lee el archivo de entregada que contiene la declinación y a
 \begin{figure}[t]
 \centering
 \includegraphics[width=.8\textwidth]{Figures/internal-extinction}
-\caption{Pasos necesarios para el workflow internal extinction}\label{fig:internal}
+\caption{Pasos necesarios para el workflow Internal extinction}\label{fig:internal}
 \end{figure}
 
 Nuestra investigación inicial sobre las dependencias para la ejecución de Internal extinction muestra que el software principal requeridos es el siguiente:  \verb|requests==2.20.0|, \verb|python=2.7.15=h33da82c_4|, \verb|numpy=1.15.0=py27h1b885b7_0| y \verb|astropy==2.0.9|
@@ -145,18 +143,18 @@ Nuestra investigación inicial sobre las dependencias para la ejecución de Inte
 
 
 \textit{Seismic Ambient Noise Cross-Correlation workflow} (o xcorr workflow) es parte del proyecto \textit{Virtual Earthquake and seismology Research Community e-science environment in Europe} (VERCE). 
-El objetivo del workflow es la prevision de riesgos producidos por terremotos y erupciones volcánicas. Estos eventos en ciertos casos van precedidos o acompañados de cambios en las propiedades geofísicas de la Tierra, como la velocidad de las olas o la velocidad de los eventos. 
+El objetivo del workflow es la previsión de riesgos producidos por terremotos y erupciones volcánicas. Estos eventos en ciertos casos van precedidos o acompañados de cambios en las propiedades geofísicas de la Tierra, como la velocidad de las olas o la velocidad de los eventos. 
 
 Para lograr desarrollo de métodos fiables de evaluación de riesgos para estas amenazas requiere un análisis en tiempo real de los datos sísmicos y un pronóstico verdaderamente prospectivo y pruebas para reducir los sesgos.
 
-xcorr logra lo anterior a través de dos etapas, la primera etapa es un preprocesamiento de series de tiempo de una estación sísmica llamadas trazas, en esta etapa se realiza una serie de tratamientos y el procesamiento de cada traza es independiente del procesamiento de otras trazas, haciendo que esta fase sea paralela. 
+xcorr logra lo anterior a través de dos etapas, la primera etapa es un pre-procesamiento de series de tiempo de una estación sísmica llamadas trazas, en esta etapa se realiza una serie de tratamientos y el procesamiento de cada traza es independiente del procesamiento de otras trazas, haciendo que esta fase sea paralela. 
 Luego la segunda etapa empareja todas las estaciones y calcula la correlación cruzada para cada par. La figura \ref{fig:xcorr} muestra los pasos del workflow.
 
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=.8\textwidth]{Figures/xcorr}
-\caption{Pasos necesarios para el workflow internal extinction}\label{fig:xcorr}
+\caption{Pasos necesarios para el workflow Internal extinction}\label{fig:xcorr}
 \end{figure}
 
 
@@ -184,7 +182,7 @@ Las imágenes se encuentran disponibles en DockerHub~\footnote{\url{https://hub.
 \subsubsection{MODFLOW-NWT}
 
 MODFLOW es el modelo hidrológico modular del \textit{United States Geological Survey} (USGS). MODFLOW se considera una norma internacional para simular y predecir las condiciones de las aguas subterráneas y las interacciones entre las aguas subterráneas y superficiales.
-El USGS MODFLOW-NWT es una formulación de Newton-Raphson para MODFLOW-2005 con el objetivo de mejorar la solución de problemas de flujo, secado y rehumnectación de aguas subterráneas no confinadas.
+El USGS MODFLOW-NWT es una formulación de Newton-Raphson para MODFLOW-2005 con el objetivo de mejorar la solución de problemas de flujo, secado y humectación de aguas subterráneas no confinadas.
 
 \begin{figure}[t]
 \centering
@@ -385,7 +383,7 @@ Se utilizó las anotaciones de los componentes de software dentro de ambas imág
     \item Noviembre: Pegasus 4.9 y Java 1.8
 \end{itemize}
 
-Luego se analizó el código y la documentación de SoyKB y las dependencias de Pegasus 4.9. Como resultado, sé obtuvo las gráficas de dependencia mostradas en la figura \ref{fig:pegasus49}.  Los gráficos de dependencia muestran que el paquete Pegasus 4.9 y SoyKB no son compatibles debido a sus requerimientos de versión Java.
+Luego se analizó el código y la documentación de SoyKB y las dependencias de Pegasus 4.9. Como resultado, se obtuvo las gráficas de dependencia mostradas en la figura \ref{fig:pegasus49}.  Los gráficos de dependencia muestran que el paquete Pegasus 4.9 y SoyKB no son compatibles debido a sus requerimientos de versión Java.
 
 Y construyó una nueva imagen instalando Pegasus 4.8, y se obtuvo los gráficos de dependencia que se muestran en la figura \ref{fig:pegasus48}. Aquí, el gráfico no tiene un conflicto y se pudo ejecutar el workflow con éxito.
 

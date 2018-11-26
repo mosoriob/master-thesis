@@ -12,7 +12,7 @@ Sin embargo, proceso de reproducibilidad puede ser tan complejo y costoso que ha
 De hecho, estudios controversiales y escándalos han expuesto la necesidad de mejorar los procesos de reproducibilidad de las investigaciones. Algunos ejemplos son: casos clínicos \cite{ioannidis2009repeatability}, sondeos del área de psicología \cite{open2015estimating} o estudios en área de la computación \cite{baggerly2009deriving}
 
 La reproducibilidad del experimento es la capacidad de volver a ejecutar un experimento con o sin la introducción de cambios en él y la obtención de resultados que sean consistentes con los originales.
-La introducción de cambios permite evaluar diferentes características de ese experimento ya que los investigadores pueden modificarlo gradualmente, mejorando y re orientando los métodos y condiciones experimentales~\cite{stodden2010reproducible}.
+La introducción de cambios permite evaluar diferentes características de ese experimento ya que los investigadores pueden modificarlo gradualmente, mejorando y re- orientando los métodos y condiciones experimentales~\cite{stodden2010reproducible}.
 %Comienza mostrar las necesidades de la reproducibilidad y introducción a los workflows
 
 Para permitir la reproducibilidad del experimento es necesario proporcionar suficiente información sobre él mismo, permitiendo comprenderlo, evaluarlo y volver a construirlo. Normalmente, los experimentos se describen en flujos de trabajo científicos (representaciones que permiten gestionar cálculos a gran escala) que se ejecutan en sistemas informáticos distribuidos. 
@@ -31,7 +31,7 @@ Los autores en~\cite{santana2017reproducibility} identificaron dos enfoques para
 
 Sin embargo, este proceso es realizado en forma manual, dejando trabajo restante para los científicos. Además, al igual que la mayoría de los trabajos dejan fuera del alcance la conservación física del entorno computacional del flujo de trabajo (basándose en la infraestructura elegida). Sin embargo, la conservación lógica y física es importante para lograr la reproducibilidad del experimento. 
 
-El problema de reproducibilidad no sólo sucede en la comunidad científica. Compañías IT también enfrenta problemas similares cuando ellos desean distribuir cualquier producto de software a múltiples servidores.
+El problema de reproducibilidad no sólo sucede en la comunidad científica. Compañías tecnológicas también enfrenta problemas similares cuando ellos desean distribuir cualquier producto de software a múltiples servidores.
 Para resolver esto, compañías utilizan virtualización a nivel. Esta tecnología se refiere a una característica del Sistema Operativo (SO) en la que el kernel del SO permite la existencia de múltiples instancias aisladas de espacio de usuario llamadas maquinas virtuales o contenedores. 
 Una de las tecnologías de virtualización más populares en la industria es Docker\footnote{\url{https://www.docker.com/}}, que implementa la virtualización de software mediante la creación de versiones mínimas de un sistema operativo base (un contenedor).
 Los Docker Containers pueden ser vistos como máquinas virtuales ligeras que permiten el ensamblaje de un entorno computacional, incluyendo todas las dependencias necesarias, como bibliotecas, configuración, código y datos necesarios, entre otros. 

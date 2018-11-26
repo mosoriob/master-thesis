@@ -66,14 +66,14 @@ El sistema anotación realiza dos tipos de anotaciones: Componentes de software 
 
 Anotamos el plan de despliegue (Deployment Plan) usando dos métodos. El primero método obtiene los pasos desde el archivo Dockerfile entregado por el usuario, esto permite obtener los pasos y la ubicación de archivo en el repositorio. 
 Usando este método se asegura la reconstrucción del ambiente debido a que cualquier archivo necesario por Dockerfile se encuentra en el repositorio Git.
-Sin embargo, un usuario puede construir una imagen sin compartir el archivo Dockerfile. En ~\cite{DBLP:conf/semweb/OsorioAV18a} se reporta que el 30\% de las imágenes Docker en DockerHub enlanza su archivo Dockerfile. 
-Por lo tanto, sino existe información del Dockerfile el sistema anotación utiliza el manifesto de la imagen Docker. Según \footnote{\url{https://docs.docker.com/registry/spec/manifest-v2-2/}} para conocer los pasos, el manifiesto de la imagen provee la configuración y el conjunto de las capas de la imagen
+Sin embargo, un usuario puede construir una imagen sin compartir el archivo Dockerfile. En ~\cite{DBLP:conf/semweb/OsorioAV18a} se reporta que el 30\% de las imágenes Docker en DockerHub vincula su archivo Dockerfile. 
+Por lo tanto, sino existe información del Dockerfile el sistema anotación utiliza el manifiesto de la imagen Docker. Según \footnote{\url{https://docs.docker.com/registry/spec/manifest-v2-2/}} para conocer los pasos, el manifiesto de la imagen provee la configuración y el conjunto de las capas de la imagen
 
 Algunos atributos importantes son:
 
 \begin{description}
 	\item [name:] \textit{string} nombre de la imagen
-	\item [tag:] \textit{tag} version de la imagen
+	\item [tag:] \textit{tag} versión de la imagen
 	\item [architecture:] \textit{string} arquitectura del servidor en cuál la imagen ha sido construido. Esta información actualmente no es utilizada por Docker.
 	\item [fsLayers:] \textit{array} lista de las capas que componente la imagen.
 		La estructura contiene los siguiente campos:
