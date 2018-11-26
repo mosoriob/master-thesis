@@ -106,9 +106,9 @@ Estos ambientes son nombrados con contenedores (contenedores).
 	figura~\ref{fig:contenedor-arch} se puede observar que la arquitectura de
 	\textit{contenedor-based virtualization}. Los contenedores utilizan el sistema	operativo compartido del ambiente virtualizador (host) y por lo tanto no es necesario nuevamente el sistema operativo para cada contenedores que se está ejecutado.
 Para el sistema operativo del \textit{host}, los procesos del contenedor no son especiales y se tratan como cualquier otro proceso que ejecuta sobre el kernel. 
-Sin embargo, los contenedores son ambientes aislados y con recursos limitados y estas carácteristicas se lograr a través de herramientas del Kernel \cite{merkel2014docker}.
+Sin embargo, los contenedores son ambientes aislados y con recursos limitados y estas características se lograr a través de herramientas del Kernel \cite{merkel2014docker}.
 	
-\begin{figure*}[]
+\begin{figure*}[t]
     \centering
     \begin{subfigure}[b]{0.5\textwidth}
          \centering
@@ -124,30 +124,35 @@ Sin embargo, los contenedores son ambientes aislados y con recursos limitados y 
     	\label{fig:vm-arch}
      \end{subfigure}
         \caption{Dado que un contenedor comparte recursos, esto reduce significativamente el uso de almacenamiento en comparación a las máquinas virtuales.}
-        \label{fig:dependencies-graph}
+        \label{fig:virtualization}
 \end{figure*}
 
 Las diferencias entre la virtualización basada en contenedores y máquinas virtuales presentan características interesantes para la ejecución de aplicaciones y workflows. Dado que un contenedor comparte recursos con el sistema operativo, como las bibliotecas, ésto reduce significativamente la necesidad de reproducir el código del sistema operativo, y significa que un servidor puede ejecutar varios ambientes con una sola instalación del sistema operativo. 
 Por lo tanto, los contenedores son excepcionalmente ligeros: sólo tienen un tamaño de megabytes y sólo tardan unos segundos en arrancar. En comparación con los contenedores, las máquinas virtuales tardan minutos en funcionar y son un orden de magnitud mayor que un contenedor equivalente. \cite{padala2007performance,regola2010recommendations,felter2014updated}. A partir de esto nace la motivación de la utilización de contenedores con una alternativa para alcanzar la conservación física de los ambientes.
-Docker es un proyecto open-source que utiliza la tecnología de los contenedores (libcontenedor) para ``construir, migrar y correr aplicaciones distribuidas". Actualmente utilizado por Yelp, Spotify, entre otros \cite{Docker:2015:Online, marmolnetworking}
-Docker es una solución que simplifica el uso de los contenedores que han estado presente durante más de una década. Primero provee una interfaz simple y segura para crear y controlar contenedores \cite{bui2015analysis}, segundo permite a los desarrolladores empaquetar y correr sus aplicaciones de manera sencilla y además se integra con herramientas terceras que permiten administración y despliegue como Puppet\footnote{\url{https://puppet.com}}, Ansible \footnote{\url{https://ansible.com}} y Vagrant\footnote{\url{https://vagrant.com}}. Y diversas herramientas de orquestación como Mesos \cite{Apach91:online}, Shipyard \cite{shipy13:online}, Kubernetes \cite{kubernetes:2015:Online}, RancherOS \cite{Ranch38:online} y Docker Swarm	 \cite{Docke38:online}.
+Docker es un proyecto open-source que utiliza la tecnología de los contenedores (libcontenedor) para ``construir, migrar y correr aplicaciones distribuidas". Actualmente utilizado por Yelp, Spotify, entre otros \cite{marmolnetworking}
+Docker es una solución que simplifica el uso de los contenedores que han estado presente durante más de una década. Primero provee una interfaz simple y segura para crear y controlar contenedores \cite{bui2015analysis}, segundo permite a los desarrolladores empaquetar y correr sus aplicaciones de manera sencilla y además se integra con herramientas terceras que permiten administración y despliegue como Puppet\footnote{\url{https://puppet.com}}, Ansible \footnote{\url{https://ansible.com}} y Vagrant\footnote{\url{https://vagrant.com}}. Y diversas herramientas de orquestación como Mesos \footnote{\url{http://mesos.apache.org/}}, 
+Shipyard \footnote{\url{https://shipyard-project.com/}},
+Kubernetes \footnote{\url{https://kubernetes.io/}},
+RancherOS \footnote{\url{http://rancher.com/rancher-os/}} y 
+Docker Swarm \footnote{\url{https://docs.docker.com/swarm/}}.
 
 Docker puede separarse en dos grandes componentes Docker Engine y Client.
 Docker Engine es una herramienta liviana y portable para administrar la virtualización. Y Docker Client, provee una interfaz para interactuar con los contenedores con los usuarios a través de RESTful APIs\cite{bui2015analysis}.\\
 
-\begin{figure}[]
+\begin{figure}[t]
   \centering
-    \includegraphics[width=0.3\textwidth]{Figures/docker.png}
+  \includegraphics[width=0.3\textwidth]{Figures/docker.png}
     \caption{Docker}
     \label{fig:docker}
 \end{figure}
 
-Docker utiliza una arquitectura de cliente-servidor, Docker Client interactua con Docker Daemon y este construye, maneja y corre los contenedores. Docker Client y Docker Daemon pueden correr en el mismo host o se puede conectar el cliente desde un host remoto. El cliente y el Daemon se comunican en forma de sockets o RESTful API \cite{Docker:2015:understanding}.
-Una imagen de Docker (\textit{Docker Image}) es una plantilla de solo lectura. Por ejemplo, una imagen puede contener las herramientas básicas de Ubuntu con Apache y una aplicación web instalada o simplemente el sistema operativo. Las imágenes son usadas para construir \emph{Docker contenedores}. Cuando el usuario crea cambios en el contenedor, este cambio no se realiza en la imagen, sino  que Docker añade una capa adicional con los cambios de la imagen\cite{bui2015analysis}. Por ejemplo, si el usuario utiliza una imagen base de Debian, luego añade el paquete emacs y luego añade el paquete apache, el estado de capas estaría representado por la figura \ref{fig:arquitectura} \cite{Docker:2015:Online}. Esto permite tener un proceso de distribución de imágenes más eficiente dado que solo es necesario distribuir las actualizaciones \cite{bui2015analysis}. El sistema de archivos descrito anteriormente se denomina una sistema de archivo basado en capas.
-\begin{figure}[]
+Docker utiliza una arquitectura de cliente-servidor, Docker Client interactua con Docker Daemon y este construye, maneja y corre los contenedores. Docker Client y Docker Daemon pueden correr en el mismo host o se puede conectar el cliente desde un host remoto. El cliente y el Daemon se comunican en forma de sockets o RESTful API \footnote{\url{https://docs.docker.com/introduction/understanding-docker/}}. 
+Una imagen de Docker (\textit{Docker Image}) es una plantilla de solo lectura. Por ejemplo, una imagen puede contener las herramientas básicas de Ubuntu con Apache y una aplicación web instalada o simplemente el sistema operativo. Las imágenes son usadas para construir \emph{Docker contenedores}. Cuando el usuario crea cambios en el contenedor, este cambio no se realiza en la imagen, sino  que Docker añade una capa adicional con los cambios de la imagen\cite{bui2015analysis}. Por ejemplo, si el usuario utiliza una imagen base de Debian, luego añade el paquete emacs y luego añade el paquete apache, el estado de capas estaría representado por la figura \ref{fig:arquitectura}. Esto permite tener un proceso de distribución de imágenes más eficiente dado que solo es necesario distribuir las actualizaciones \cite{bui2015analysis}. El sistema de archivos descrito anteriormente se denomina una sistema de archivo basado en capas.
+\begin{figure}[t]
   \centering
   \includegraphics[width=0.6\textwidth]{Figures/docker-filesystems-multilayer}
-    \caption{Las imágenes Docker con compuestas por capas. La última capa (a1886ebc75ae) es la única capa en modo escritura.}
+    \caption{Las imágenes Docker con compuestas por capas. 
+    La última capa (a1886ebc75ae) es la única capa en modo escritura.}
     \label{fig:arquitectura}
 \end{figure}	
 
@@ -164,10 +169,12 @@ Incluso cuando los archivos Dockerfile están disponibles, no son lo suficientem
 Además, es posible que en el contenedor existan algunos componentes que no estén especificados por el propio Dockerfile. Para abordar este problema proponemos un enfoque automático para analizar el contenido de un contenedor Docker y extraer la información sobre los componentes de software instalados en él. Esta información se convierte en datos semánticos, codificados como RDF bajo el conjunto de ontologías.
 
 Los contenedores Docker consiste de un ambiente virtual con: con archivos de usuarios y metadata, cada contenedor es construido a partir de una imagen base como se mencionó anteriormente. 
-Esta imagen indica la base del contenedor y se asocia un proceso inicial, él cual debe correr cuando el contenedor es iniciado~\cite{Docker:2015:understanding}. Para describir los pasos incluidos en la creación de un contenedor, se ejemplificará con la creación de uno.
+Esta imagen indica la base del contenedor y se asocia un proceso inicial, él cual debe correr cuando el contenedor es iniciado.
+
+La figura \ref{lst:simple-docker}describe los pasos incluidos en la creación de un contenedor.
 
 \begin{figure*}
-	\begin{lstlisting}[caption={Ejemplo de la ejecutación de un contenedor utilizando la imagen Docker},label={lst:tensorflow},language=bash]
+	\begin{lstlisting}[caption={Ejemplo de la ejecutación de un contenedor utilizando la imagen Docker},label={lst:simple-docker},language=bash]
 	docker run -i -t ubuntu /bin/bash
 \end{lstlisting}
 \end{figure*}
@@ -185,10 +192,10 @@ Esta imagen indica la base del contenedor y se asocia un proceso inicial, él cu
 Docker utiliza dos funcionalidades de Linux \emph{namespaces} y \emph{cgroups} para crear ambientes virtuales para los contenedores. \emph{cgroups} o \emph{control groups} proveen un mecanismo de contabilidad y limites de recursos que pueden utilizar los contenedores\cite{bui2015analysis}. Los \emph{namespaces} proveen del aislamiento que es llamado contenedor. 
 Cuando sea crea un contenedor, Docker crea un conjunto de \emph{namespaces} para el contenedor. Los \emph{namespaces} utilizados por Docker: mount (mnt) para el manejo del montaje, PID para el aislamiento de los procesos, net para el manejo de interfaces y IPC para acceder a recursos de IPC. 
 Docker logra el aislamiento de los procesos separando los procesos en \emph{namespaces} y limitando los permisos de los procesos a otros contenedores. 
-\emph{PID namespaces} (añadido en el kernel \( \geq 2.6.3.2)\) es el mecanismo utilizado, logrando que un proceso que se encuentra en el contenedor solo pueda ver procesos que se encuentra en ese contenedor. Por lo tanto un atacante no puede observar procesos de otro contenedor, lo que aísla al contenedor este nivel \cite{bui2015analysis, LVM:2015:Online}.
+\emph{PID namespaces} (añadido en el kernel \( \geq 2.6.3.2)\) es el mecanismo utilizado, logrando que un proceso que se encuentra en el contenedor solo pueda ver procesos que se encuentra en ese contenedor. Por lo tanto un atacante no puede observar procesos de otro contenedor, lo que aísla al contenedor este nivel \cite{bui2015analysis}.
 Docker usa \emph{mount namespaces} o \emph{filesystem namespaces} para aislar los \emph{filesystems} asociados a los contenedores. De la misma forma que ocurre con los procesos, los eventos del sistema de archivo que ocurre en el contenedor sólo afectan a ese contenedor.
 
-Cómo se menciono anteriormente, Docker utiliza \emph{cgroups} que permite especificar que \emph{device} puede ser utilizado con el contenedor. Esto bloquea la posibilidad de crear y usar \emph{device nodes} que puedan ser utilizados para atacar el host. Los \emph{device nodes} que son creados para cada contenedor por defecto: son: /dev/console, /dev/null, /dev/zero, /dev/full, /dev/tty*, /dev/urandom, /dev/random, /dev/fuse. \cite{walsh:2014:Online}
+Cómo se menciono anteriormente, Docker utiliza \emph{cgroups} que permite especificar que \emph{device} puede ser utilizado con el contenedor. Esto bloquea la posibilidad de crear y usar \emph{device nodes} que puedan ser utilizados para atacar el host. Los \emph{device nodes} que son creados para cada contenedor por defecto: son: /dev/console, /dev/null, /dev/zero, /dev/full, /dev/tty*, /dev/urandom, /dev/random, /dev/fuse.
 IPC (\emph{inter-process communication} es un conjunto de objetos para el intercambio de datos a través de los procesos, como semáforos, colas de mensajes, segmentos de memoria compartida. Los procesos corriendo en los contenedores utilizan \emph{IPC namespaces} que permite la creación de un \emph{IPC} separado y independiente para cada contenedor, con esto se previene que procesos en un contenedor interfieran con otros contenedores o el host.
 Para cada contenedor, Docker crea una red independiente usando \emph{network namespaces}, compuesta de su propia IP, rutas, \emph{network devices}. Esto permite que el contenedor pueda interactuar con otro host a través de su propia interfaz.
 Por omisión, la conexión se realiza gracias al host que provee un \emph{Virtual Ethernet bridge} en la máquina host, llamado docker0 que automáticamente realiza un \emph{forward} de los paquetes entre las interfaces. Cuando Docker crea un nuevo contenedor, esto establece una interfaz de red virtual con un nombre único que se conecta con el \emph{bridge (docker0)} y con la interfaz \emph{eth0} del contenedor \cite{bui2015analysis}.
@@ -226,7 +233,7 @@ Clair se componente de distintos controladores (\emph{drivers}).
 
 La figura \ref{table:clair-datasources} muestra los drivers implementados por Clair.
 
-\begin{table}[]
+\begin{table}[t]
 \begin{tabular}{|l|l|l|l|}
 \hline
 Fuente de datos             & Datos recolectados                                                                                                          & Formato & Licencia \\ \hline
@@ -237,6 +244,8 @@ Oracle Linux Security Data  & \emph{Namespaces:} Oracle Linux 5, 6, 7           
 Alpine SecDB                & \begin{tabular}[c]{@{}l@{}}\emph{Namespaces:} Alpine 3.3, Alpine 3.4, \\ \\ Alpine 3.5\end{tabular}                         & apk     & MIT      \\ \hline
 NIST NVD                    & Metadatos genéricos de vulnerabilidades                                                                                     & N/A     & Public   \\ \hline
 \end{tabular}
+\caption{Fuente de datos implementadas por Clair}
+\label{table:clair-datasources}
 \end{table}
 
 \section{Sistemas de paquetes}

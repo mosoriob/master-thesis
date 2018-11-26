@@ -42,12 +42,13 @@ Pegasus lee las descripciones del flujo de trabajo de los archivos DAX. El térm
 Pegasus opcionalmente utiliza en HTCondor como administrador de tareas. Por lo tanto, construimos dos versiones para la imagen de Pegasus; una versión tiene ins
 talado el paquete condor y otra sin él. La justificación de decisión recae en permitir a los científicos utilizar una imagen simple si es necesario.
 El paquete Pegasus ha sido obtenido del repositorio oficial~\footnote{\url{http://download.pegasus.isi.edu/wms/download/debian}}.
-Los principales requisitos de pegasus son: Java (la versión Java depende de la versión pegasus), python y perl. La figura \ref{fig:pegasus-deps.pdf} muestra las dependencias especificadas tanto por el sistema de paquetes y documentación.
+Los principales requisitos de pegasus son: Java (la versión Java depende de la versión pegasus), python y perl. La figura \ref{fig:pegasus-deps} muestra las dependencias especificadas tanto por el sistema de paquetes y documentación.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=.5\textwidth]{Figures/pegasus-deps}
-\caption{Dependencias de Pegasus. En azul: dependencias necesarias y especificadas en el sistema de paquetes. En verde: necesarias pero no especificadas en el sistema de paquetes. En naranjas: dependencias recomendadas}\label{fig:pegasus-deps}
+\caption{Dependencias de Pegasus. En azul: dependencias necesarias y especificadas en el sistema de paquetes. En verde: necesarias pero no especificadas en el sistema de paquetes. En naranjas: dependencias recomendadas}
+\label{fig:pegasus-deps}
 \end{figure}
 
 Las imágenes se encuentran disponibles en DockerHub~\footnote{\url{https://hub.docker.com/r/dockerpedia/pegasus_workflow_images/}}
@@ -69,7 +70,7 @@ Los componentes de software utilizados por SoyKB se clasifican en dos tipos: pro
 \begin{figure}[t]
 \centering
 \includegraphics[width=.8\textwidth]{Figures/soykb-deps}
-\caption{Dependencias de SoyKb. En amarillo: software propio y en verde software de terceros}\label{fig:modflow} 
+\caption{Dependencias de SoyKb. En amarillo: software propio y en verde software de terceros}\label{fig:soykb-deps} 
 \end{figure}
 
 La evaluación de los resultados se realizó de forma manual al igual que en \cite{santana2017reproducibility} debido a los pasos aleatorios del workflow. La metodología de la verificación fue la revisión de la estructura de los resultados, el tamaño de los archivos, número de líneas y la inexistencia de errores.
@@ -92,7 +93,7 @@ Dado que los resultados de Montage son imágenes se utiliza la herramienta de ha
 Como resultado, se obtiene un factor de similitud de 1,0 (de 1,0) con un umbral de 0,85.
 Las figuras \ref{fig:montage-wicus} y \ref{fig:montage-mosorio} muestran las imágenes resultantes y los archivos resultantes en formato FITS se encuentran en nuestro repositorio \footnote{\url{https://github.com/dockerpedia/montage_results}}. 
 
-\begin{figure*}[h]
+\begin{figure*}[t]
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
          \centering
@@ -194,7 +195,7 @@ El USGS MODFLOW-NWT es una formulación de Newton-Raphson para MODFLOW-2005 con 
 
 La figura \ref{fig:modflow} muestra la estructura principal del workflow, desarrollado con pipeline compuesto por tres pasos. El proceso inicia leyendo el modelo a utilizar. Luego, el archivo de zona se usa para especificar arreglos de zonas que van usarse y finalmente se genera una visualización que muestra la cantidad de millones de galones por día en zona. Las figuras \ref{fig:modflow-original} y \ref{fig:modflow-reproduced} muestran los resultados generados por el ambiente original y reproducido respectivamente.
 
-\begin{figure*}[]
+\begin{figure*}[t]
     \centering
     \begin{subfigure}[b]{\textwidth}
          \centering
@@ -227,7 +228,7 @@ Todas las imágenes son publicada con su correspondiente Dockerfile y cualquier 
 
 Para evaluar la conservación física se utiliza tres proveedores diferentes: DigitalOcean, Google Cloud y un local. La figura de \ref{image-env} presenta una descripción de las características de los ambientes    
 
-\begin{table}[]
+\begin{table}[t]
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline
@@ -249,26 +250,31 @@ El proceso de instalación puede ser encontrado en la documentación oficial \fo
 Cada imagen de Docker tiene archivo README con las instrucciones para correr el experimento. Las figuras \ref{lst:1}~\ref{lst:2} y~\ref{lst:3}  muestran los pasos necesarios para correr el experimento computacional. 
 
 El primer paso es correr el experimento y descargar la imagen:
-
+\begin{figure*}[t]
 \begin{lstlisting}[caption={Descargar y correr la imagen disponible en DockerHub mosorio/pegasus\_workflow\_images:soykb},label={lst:1},language=bash]
 docker run -d --rm -it --name soybean \
  mosorio/pegasus_workflow_images:soykb
-\end{lstlisting}
+\end{lstlisting}	
+\end{figure*}
+
 
 Luego, el usuario debe entrar al container. El usuario puede confirmar que se encuentra dentro del container por el cambio de símbolo de la terminal  (prompt).
-
+\begin{figure*}[t]
 \begin{lstlisting}[caption={Entrar al ambiente computacional utilizando bash},label={lst:2},language=bash]
 root@docker-instance:~# docker exec \
 -ti -u workflow:workflow soybean bash
 workflow@a0f861e6fbc4:~ 
 \end{lstlisting}
+\end{figure*}
 
 Finalmente, correr el workflow. 
 
+\begin{figure*}
 \begin{lstlisting}[caption={Run the workflow},label={lst:3},language=bash]
 workflow@a0f861e6fbc4:~/soykb \
 ./workflow-generator --exec-env distributed	
 \end{lstlisting}
+\end{figure*}
 
 Para evaluar si las imágenes Docker son livianas y almacenables, se construyó dos imágenes, una utilizando Docker y otra utilizando máquinas virtuales. La imagen de Docker se construyó bajo nuestro enfoque y la imagen de la máquina virtual basada en el trabajo de ~\cite{santana2017reproducibility}. Luego se compara el uso de disco de ambas.
 
@@ -290,8 +296,7 @@ Para evaluar la calidad de las anotaciones se utilizan dos experimentos.
 
 Para obtener las anotaciones, se propone e implementa usar Clair y construir un sistema de anotador. La figura \ref{fig:arch} muestra los pasos principales del sistema.
 
-
-\begin{figure*}[]
+\begin{figure*}[t]
 \includegraphics[width=\textwidth]{Figures/arch.pdf}
 \caption{El sistema anotador permite recibir la información de la imagen, consultar los componentes de software a nuestra versión de Clair, obtener metadatos desde el manifesto y almacenar la información en forma de triples en Apache Jena.}\label{fig:arch}
 \end{figure*}
@@ -307,15 +312,17 @@ Para obtener las anotaciones, se propone e implementa usar Clair y construir un 
 
 Para reproducir el entorno, el sistema obtiene el repositorio asociado a la imagen y construir la nueva imagen. La URL del repositorio y el cambio asociado (representado por un VCS commit) se pueden obtener por dos métodos: consultando nuestras anotaciones o usando un comando Docker. El listado \ref{lst:inspect_command} muestra las etiquetas de la imagen de flujo de trabajo SoyKB.
 
-
+\begin{figure*}
 \begin{lstlisting}[caption={Inspect image annotations},label={lst:inspect_command},language=bash]
 root@docker-instance:~# docker inspect \ 
     --format='{{json .Config.Labels}}' \ 
     dockerpedia/soykb:latest
 \end{lstlisting}
+\end{figure*}
 
 La figura \ref{lst:inspect_result} muestra algunas de las etiquetas de la imagen basado en \textit{Open Container Initiative}. Y todas las imágenes disponibles en nuestros repositorios presentan esas etiquetas.
 
+\begin{figure*}
 \begin{lstlisting}[caption={Inspect image annotations},label={lst:inspect_result},language=json]
 {
 "maintainer": "Maximiliano Osorio <mosorio@inf.utfsm.cl>",
@@ -330,11 +337,12 @@ La figura \ref{lst:inspect_result} muestra algunas de las etiquetas de la imagen
 }
 
 \end{lstlisting}
+\end{figure*}
 
 
 Para evaluar si los entornos son similares, comparamos ambas imágenes utilizando el lenguaje de consulta SPARQL 1.1. El experimento fue un caso real en el que una imagen podía ejecutar el flujo de trabajo y la otra no. 
-La figura \ref{lst:compare_query} muestra la consulta para identificar los diferentes componentes de software entre dos imágenes.
-
+La figura \ref{lst:compare_query} muestra la consulta para identificar los componentes diferentes de software entre dos imágenes y la figura \ref{lst:compare_query_2} muestra muestra la consulta para identificar los componentes iguales de software entre dos imágenes.
+\begin{figure*}
 \begin{lstlisting}[caption={¿Cuáles son los diferentes componentes entre dos imágenes?},label={lst:compare_query},language=sparql]
 SELECT * WHERE {
  pegasus_workflow_images%3Alatest
@@ -345,8 +353,11 @@ SELECT * WHERE {
  }
 }
 \end{lstlisting}
+\end{figure*}
 
-\begin{lstlisting}[caption={¿Cuáles son los componentes que comparten entre dos imágenes?},label={lst:compare_query},language=sparql]
+\begin{figure*}
+
+\begin{lstlisting}[caption={¿Cuáles son los componentes que comparten entre dos imágenes?},label={lst:compare_query_2},language=sparql]
 SELECT * WHERE {
  pegasus_workflow_images%3Alatest
       vocab:containsSoftware ?p .
@@ -354,7 +365,8 @@ SELECT * WHERE {
       vocab:containsSoftware ?p   
     }
     \end{lstlisting}
-    
+    \end{figure*}
+
     
 \section{Resultados y discusión}\label{s5.4}
 Se logró ejecutar los workflows utilizando imágenes Docker sobre sus plataformas correspondientes.
@@ -373,14 +385,14 @@ Se utilizó las anotaciones de los componentes de software dentro de ambas imág
     \item Noviembre: Pegasus 4.9 y Java 1.8
 \end{itemize}
 
-Luego se analizó el código y la documentación de SoyKB y las dependencias de Pegasus 4.9. Como resultado, se obtuvó las gráficas de dependencia mostradas en la figura \ref{fig:pegasus49}.  Los gráficos de dependencia muestran que el paquete Pegasus 4.9 y SoyKB no son compatibles debido a sus requerimientos de versión Java.
+Luego se analizó el código y la documentación de SoyKB y las dependencias de Pegasus 4.9. Como resultado, sé obtuvo las gráficas de dependencia mostradas en la figura \ref{fig:pegasus49}.  Los gráficos de dependencia muestran que el paquete Pegasus 4.9 y SoyKB no son compatibles debido a sus requerimientos de versión Java.
 
 Y construyó una nueva imagen instalando Pegasus 4.8, y se obtuvo los gráficos de dependencia que se muestran en la figura \ref{fig:pegasus48}. Aquí, el gráfico no tiene un conflicto y se pudo ejecutar el workflow con éxito.
 
 La nueva imagen fue nombrada como: \verb|pegasus_workflow_images:4.8.5|
 
 
-\begin{figure*}[]
+\begin{figure*}[t]
     \centering
     \begin{subfigure}[b]{0.40\textwidth}
          \centering
@@ -403,7 +415,7 @@ La razón principal de los trabajos anteriores para evitar la conservación fís
 Los resultados de la comparación del uso del disco muestran que hay una disminución del 64,2\% para la imagen Pegasus y del 41,5\% para la dispel4py. La tabla \ref{storage-reduce} muestra la diferencia para el sistema de flujo de trabajo Pegasus y dispel4py.
 
 
-\begin{table}[]
+\begin{table}[t]
 \centering
 \begin{tabular}{|l|l|l|}
 \hline
