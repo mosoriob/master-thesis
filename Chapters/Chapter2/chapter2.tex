@@ -202,27 +202,25 @@ La figura \ref{lst:simple-docker}describe los pasos incluidos en la creación de
 	\begin{itemize}
 		\item \emph{Docker Client} le informa al Docker que debe correr un contenedor.
 		\item En este caso el comando \texttt{/bin/bash} será el proceso \texttt{init} o 0 del contenedor
-		\item \textbf{Traer la imagen:} Docker verifica la existencia de la imagen Ubuntu y sino existe en el host, entonces Docker descarga desde el repositorio ya sea privado o publico. Si la imagen existe entonces crea el contenedor.
-		\item \textbf{Asignar el sistema de archivos y montar la capa de escritura:} El contenedor es creado en el sistema de archivos y se añade una capa en modo escritura en la imagen.
-		\item \textbf{Crear la red y conectar con la interfaz puente:} Crea la interfaz de red que permite que contenedor pueda enviar y recibir paquetes con el host a través del puente (docker0).
-		\item \textbf{Asignar un dirección IP:} Asigna una dirección IP del pool al contenedor
-		\item \textbf{Capturar la salida estándar y de errores:} Dependiendo de la configuración de contenedor, Docker enviará a los registros de errores hacia el mismo servidor u otro externo.
+		\item Docker verifica la existencia de la imagen Ubuntu y sino existe en el host, entonces Docker descarga desde el repositorio ya sea privado o publico. Si la imagen existe entonces crea el contenedor.
+		\item Asignar el sistema de archivos y montar la capa de escritura, para crear el contenedor debe realizarse en el sistema de archivos y añadir una capa en modo escritura en la imagen.
+		\item Crea la interfaz de red que permite que contenedor pueda enviar y recibir paquetes con el host a través del puente (docker0).
+		\item Asigna una dirección IP del conjunto de dirección IP disponibles al contenedor
+		\item Dependiendo de la configuración de contenedor, Docker enviará a los registros de errores hacia el mismo servidor u otro externo.
 	\end{itemize}
 
-Docker utiliza dos funcionalidades de Linux \emph{namespaces} y \emph{cgroups} para crear ambientes virtuales para los contenedores. \emph{cgroups} o \emph{control groups} proveen un mecanismo de contabilidad y limites de recursos que pueden utilizar los contenedores\cite{bui2015analysis}. Los \emph{namespaces} proveen del aislamiento que es llamado contenedor. 
-Cuando sea crea un contenedor, Docker crea un conjunto de \emph{namespaces} para el contenedor. Los \emph{namespaces} utilizados por Docker: mount (mnt) para el manejo del montaje, PID para el aislamiento de los procesos, net para el manejo de interfaces y IPC para acceder a recursos de IPC. 
-Docker logra el aislamiento de los procesos separando los procesos en \emph{namespaces} y limitando los permisos de los procesos a otros contenedores. 
-\emph{PID namespaces} (añadido en el kernel \( \geq 2.6.3.2)\) es el mecanismo utilizado, logrando que un proceso que se encuentra en el contenedor solo pueda ver procesos que se encuentra en ese contenedor. Por lo tanto un atacante no puede observar procesos de otro contenedor, lo que aísla al contenedor este nivel \cite{bui2015analysis}.
-Docker usa \emph{mount namespaces} o \emph{filesystem namespaces} para aislar los \emph{filesystems} asociados a los contenedores. De la misma forma que ocurre con los procesos, los eventos del sistema de archivo que ocurre en el contenedor sólo afectan a ese contenedor.
+Para crear los ambientes virtuales Docker utiliza dos funcionalidades de Linux: \emph{namespaces}\footnote{\url{http://man7.org/linux/man-pages/man7/namespaces.7.html}} y \emph{cgroups}\footnote{\url{http://man7.org/linux/man-pages/man7/cgroups.7.html}}. \emph{cgroups} o \emph{control groups} proveen un mecanismo de contabilidad y limites de recursos que pueden utilizar los contenedores\cite{bui2015analysis}. Los \emph{namespaces} proveen del aislamiento para el contenedor. 
+Cuando se crea un contenedor, Docker crea un conjunto de \emph{namespaces} para el contenedor. Los \emph{namespaces} utilizados por Docker son: mount (mnt) para el manejo del montaje, PID para el aislamiento de los procesos, net para el manejo de interfaces y IPC para acceder a recursos de IPC. 
+Docker logra el aislamiento de los procesos separando los procesos en \emph{PID namespaces}.
+\emph{PID namespaces} (añadido en el kernel \( \geq 2.6.3.2)\) logdando que un proceso que se encuentra en el contenedor solo pueda ver procesos que se encuentra en ese contenedor. Por lo tanto un atacante no puede observar procesos de otro contenedor, lo que aísla al contenedor este nivel \cite{bui2015analysis}.
+Docker usa \emph{mount namespaces} o \emph{filesystem namespaces} para aislar los \emph{filesystems} asociados a los contenedores. De la misma forma que ocurre con los procesos, los eventos del sistema de archivos que ocurre en el contenedor sólo afectan a ese contenedor.
 
 Cómo se menciono anteriormente, Docker utiliza \emph{cgroups} que permite especificar que \emph{device} puede ser utilizado con el contenedor. Esto bloquea la posibilidad de crear y usar \emph{device nodes} que puedan ser utilizados para atacar el host. Los \emph{device nodes} que son creados para cada contenedor por defecto: son: /dev/console, /dev/null, /dev/zero, /dev/full, /dev/tty*, /dev/urandom, /dev/random, /dev/fuse.
 IPC (\emph{inter-process communication} es un conjunto de objetos para el intercambio de datos a través de los procesos, como semáforos, colas de mensajes, segmentos de memoria compartida. Los procesos corriendo en los contenedores utilizan \emph{IPC namespaces} que permite la creación de un \emph{IPC} separado y independiente para cada contenedor, con esto se previene que procesos en un contenedor interfieran con otros contenedores o el host.
 Para cada contenedor, Docker crea una red independiente usando \emph{network namespaces}, compuesta de su propia IP, rutas, \emph{network devices}. Esto permite que el contenedor pueda interactuar con otro host a través de su propia interfaz.
-Por omisión, la conexión se realiza gracias al host que provee un \emph{Virtual Ethernet bridge} en la máquina host, llamado docker0 que automáticamente realiza un \emph{forward} de los paquetes entre las interfaces. Cuando Docker crea un nuevo contenedor, esto establece una interfaz de red virtual con un nombre único que se conecta con el \emph{bridge (docker0)} y con la interfaz \emph{eth0} del contenedor \cite{bui2015analysis}.
-Además para controlan la cantidad de recursos como CPU, memoria, \emph{disk I/O} que el contenedor puede utilizar se utiliza \emph{Cgroups}. A partir de esto se protege contra ataques de DoS.
-
-
-
+Por omisión, la conexión se realiza gracias al host que provee un \emph{Virtual Ethernet bridge} en la máquina host, llamado docker0 que automáticamente realiza un \emph{forward} de los paquetes entre las interfaces. Cuando Docker crea un nuevo contenedor, se crea una interfaz de red virtual con un nombre único que se conecta con el \emph{bridge (docker0)} y con la interfaz \emph{eth0} del contenedor \cite{bui2015analysis}.
+Además \emph{Cgroups} controla la cantidad de recursos como CPU, memoria, \emph{disk I/O} que el contenedor puede utilizar. 
+Fijando estos parámetros se puede limitar los efectos de un dtaque de denegación de servicio (DDoS).
 
 \section{Clair}\label{sec:clair}
 
