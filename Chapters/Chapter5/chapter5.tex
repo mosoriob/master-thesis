@@ -4,10 +4,9 @@
 %-----------------------------------------------
 \section{Experimentos computacionales}\label{s5.1}
 
-Para validar nuestra propuesta y su aplicación en el contexto de workflows científicos, se ha seleccionado un subconjunto de workflows y WMSs. 
+Para validar la propuesta y su aplicación en el contexto de workflows científicos, se ha seleccionado un subconjunto de workflows y WMSs. 
 El subconjunto ha sido seleccionado bajo los criterio de: nivel de utilización de WMS, la diversidad de lenguajes utilizados en el conjunto, y disponibilidad de los materiales del workflow. 
 Es requisito que los materiales deben incluir los datos de ingresos que permitan reproducir de forma completa el workflow, documentación, resultados o anotaciones. Además deben permitan comparar los resultados de nuestro ambientes resultantes.
-
 Para cada WMS, se construye una imagen estándar. En consecuencia, un investigador puede importar esta imagen e instalar los componentes de software relacionados con el workflow.
 Esto se puede conseguir utilizando la instrucción \texttt{FROM} de Dockerfile. Por ejemplo, el workflow SoyKB utiliza Pegasus como WMS. Por lo tanto, la imagen SoyKb importa la imagen Pegasus lo cual permite no almacenar copia de las capas de Pegasus por cada workflow.
 Para entender los requisitos del workflow, nosotros inspeccionamos la documentación disponible y las anotaciones generadas por WICUS \cite{santana2017reproducibility}.
@@ -62,7 +61,7 @@ La figura \ref{fig:soykb} muestra una representación gráfica del workflow, don
 \caption[Representación workflow: SoyKb]{Representación entregada por Pegasus del workflow SoyKB.}\label{fig:soykb}
 \end{figure}
 
-Los componentes de software utilizados por SoyKB se clasifican en dos tipos: propio (en amarillo) y de terceros (en verde). Los componentes principales son: bwa, gatk y picard y el software de tercero java-1.7.0
+Al estudiar la documentación de workflow SoyKB, se ha obtenidos los siguientes componentes de software que se clasifican en dos tipos: propio (en amarillo) y de terceros (en verde). Los componentes principales son: bwa, gatk y picard y el software de tercero java-1.7.0
 
 \begin{figure}[t]
 \centering
@@ -166,7 +165,7 @@ Nuestra investigación inicial sobre las dependencias para la ejecución indica 
 WINGS es un sistema de flujo de trabajo semántico que ayuda a los científicos en el diseño de experimentos computacionales. 
 En WINGS, se especifica cómo deben ser procesados los conjuntos de datos por una serie de componentes del software en una configuración particular.
 WINGS a diferencia de los otros sistemas de workflows utiliza imágenes Docker para su distribución. Pese a que WINGS presenta las imágenes de Docker, estas imágenes son una caja negra y no es posible obtener los componentes de software.
-Nuestra investigación inicial sobre las dependencias indica que los principales requisitos de WINGS son: Java 1.8, Tomcat 8.5, Docker. La figura \ref{fig:wings-deps} muestra en mayor detalles las dependencias especificadas tanto por el sistema de paquetes o documentación.
+La investigación inicial sobre las dependencias indica que los principales requisitos de WINGS son: Java 1.8, Tomcat 8.5, Docker. La figura \ref{fig:wings-deps} muestra en mayor detalles las dependencias especificadas tanto por el sistema de paquetes o documentación.
 
 \begin{figure}[t]
 \centering
