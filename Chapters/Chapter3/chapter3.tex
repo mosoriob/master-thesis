@@ -1,6 +1,6 @@
 \chapter{Objetivos de trabajo}\label{Chapter3} 
 El principal objetivo de este trabajo es complementar enfoques existentes para la reproducibilidad científica en el área de las ciencias de la computación. Para ello, se propone un nuevo enfoque para conservar el ambiente de ejecución del experimento científico.
-Hemos identificado problemas abiertos, en orden de definir los objetivos de trabajo. Luego, estos objetivos se ven formalizados por un conjunto de hipótesis. Y además, se define un conjunto de hechos que se asumen para restringir el campo de aplicación de la propuesta.
+Se ha identificado los problemas abiertos, en orden de definir los objetivos de trabajo. Luego, estos objetivos se ven formalizados por un conjunto de hipótesis. Y además, se define un conjunto de hechos que se asumen para restringir el campo de aplicación de la propuesta.
 
 %--------------------------------------------
 %	SECTION OPEN RESEARCH PROBLEMS
@@ -26,7 +26,7 @@ En función a los problemas abiertos detectados, se definen las siguientes hipó
 
 \begin{itemize}
 	\item Un proceso automático puede describir los requerimientos de ambiente computacional y codificarlo en un formato compartible utilizando modelos semánticos.
-	\item La descripción de containers utilizando modelos semánticos permite la reproducción del ambiente de un experimento científico.
+	\item La descripción de contenedores utilizando modelos semánticos permite la reproducción del ambiente de un experimento científico.
 \end{itemize}
 %--------------------------------------------
 %	SECTION OBJETIVOS
@@ -37,7 +37,6 @@ En función a los problemas abiertos detectados, se definen las siguientes hipó
 
 Para enfrentar los problemas abiertos se definen los siguientes objetivos. Estos objetivos permiten la verificación de la hipótesis y ser una guía para el desarrollo.
 
-
 \begin{itemize}
 	\item Lograr conservación física y lógica de los ambientes computaciones de un experimento usando Containers
 	\item Implementar un proceso automático capaz de leer la descripción del ambiente y especificar uno nuevo.
@@ -47,15 +46,13 @@ Para enfrentar los problemas abiertos se definen los siguientes objetivos. Estos
 \subsection{Objetivos específicos}
 
 \begin{itemize}
-	\item Adaptar y mejorar modelos estándares que describen ambientes computacionales científicos para incluir virtualización basada en containers.
+	\item Adaptar y mejorar modelos estándares que describen ambientes computacionales científicos para incluir virtualización basada en contenedores.
 	\item Designar una framework para anotar los componentes de ambiente del experimento usando modelos semánticos.
 \end{itemize}
-
-
 
 \section{Suposiciones}
 
 \begin{itemize}
-	\item Las técnicas de virtualización basadas en contenedores son una tecnología estable. Por lo tanto, las herramientas utilizadas estarán disponibles a largo plazo. Como sitios de almacenamiento de repositorio o soluciones de software que soportan la gestión de recursos virtualizados.
-	\item Los componentes de software anotados será los cuáles sean instalados por sistemas de paquetes anteriormente nombrados. Los componentes de software que sean binarios serán solamente anotados en los pasos de construcción. 
+	\item Las técnicas de virtualización basadas en contenedores son una tecnología estable. Por lo tanto, las herramientas utilizadas estarán disponibles a largo plazo. Al igual que los sitios de almacenamiento de repositorios o soluciones de software que soportan la gestión de recursos virtualizados.
+	\item Los componentes de software anotados será los cuáles sean instalados por sistemas de paquetes. Los componentes de software que sean binarios serán solamente anotados en los pasos de construcción. 
 \end{itemize}
